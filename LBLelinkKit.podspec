@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "LBLelinkKit"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "lebo ios framework LBLelinkKit"
   s.homepage     = "https://github.com/lebo123/LBLelinkKit"
   s.license      = "MIT"
