@@ -7,5 +7,7 @@ Pod::Spec.new do |s|
   s.authors            = { "lebo123" => "cm@hpplay.cn" }
   s.platform     = :ios, "5.0"
   s.source       = { :git => "https://github.com/lebo123/LBLelinkKit.git", :tag => "#{s.version}" }
+  s.source_files  ='LBLelinkKit.framework/**/*' 
   s.requires_arc = true
+  s.ios.vendored_frameworks = 'LBLelinkKit.framework'
 end
