@@ -1,6 +1,0 @@
-framework module LBLelinkKit {
-  umbrella header "LBLelinkKit.h"
-
-  export *
-  module * { export * }
-}
