@@ -2,6 +2,9 @@ Pod::Spec.new do |s|
   s.name         = "LBLelinkKit"
   s.version      = "1.0.7"
   s.summary      = "lebo ios framework LBLelinkKit"
+  s.description      = <<-DESC
+  It is marquee view used on iOS, which implement by Objective-C.
+  DESC
   s.homepage     = "https://github.com/lebo123/LBLelinkKit"
   s.license      = "MIT"
   s.author            = {'lebosdk' => 'cm@hpplay.cn' }
