@@ -5,8 +5,10 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/lebo123/LBLelinkKit"
   s.license      = "MIT"
   s.authors            = { "lebosdk" => "cm@hpplay.cn" }
-  s.platform     = :ios, "5.0"
+  s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/lebo123/LBLelinkKit.git", :tag => "#{s.version}" }
   s.source_files  ='LBLelinkKit.framework/**/*' 
   s.requires_arc = true
+  s.vendored_frameworks = 'Frameworks/MyFramework.framework'
+  s.libraries	 = 'libxml2.tbd'
 end
