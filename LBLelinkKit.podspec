@@ -10,5 +10,7 @@ Pod::Spec.new do |s|
  # s.source_files  ='LBLelinkKit.framework/**/*' 
   s.requires_arc = true
   s.ios.vendored_frameworks = 'LBLelinkKit.framework'
-  s.libraries	 = 'libxml2.tbd'
+  s.ios.library	 = 'xml2'
+ # s.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-lObjC' }
+ #  s.header_mappings_dir = 'usr/include/libxml2'
 end
