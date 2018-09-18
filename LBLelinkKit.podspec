@@ -2,17 +2,17 @@ Pod::Spec.new do |s|
 
 # Root specification
   s.name         = "LBLelinkKit"
-  s.version      = "1.0.9"
+  s.version      = "1.1.1"
   s.author            = {'lebosdk' => 'cm@hpplay.cn' }
   s.license      = 'MIT'
-  s.homepage     = 'https://github.com/lebosdk/LBLelinkKit'
- # s.homepage     = 'https://github.com/lebo123/LBLelinkKit'
+ # s.homepage     = 'https://github.com/lebosdk/LBLelinkKit'
+  s.homepage     = 'https://github.com/lebo123/LBLelinkKit'
   s.summary      = 'lebo ios framework LBLelinkKit'
 
   s.description      = <<-DESC
   It is marquee view used on iOS, which implement by Objective-C.
   DESC
-  s.source       = { :git => "https://github.com/lebosdk/LBLelinkKit.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/lebo123/LBLelinkKit.git", :tag => "v#{s.version}" }
 
 # Platform
   s.platform     = :ios, "8.0"
