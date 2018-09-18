@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
   It is marquee view used on iOS, which implement by Objective-C.
   DESC
-  s.source       = { :git => "https://github.com/lebo123/LBLelinkKit.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/lebo123/LBLelinkKit.git", :tag => s.version }
 
 # Platform
   s.platform     = :ios, '8.0'
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.ios.library	 = 'xml2'
   s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' }
-
+  s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' }
 
 # File patterns
   #s.public_header_files = 'LBLelinkKit.framework/*.h'
