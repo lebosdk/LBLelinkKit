@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 # Root specification
   s.name         = "LBLelinkKit"
-  s.version      = "30001"
+  s.version      = "30002"
   s.author            = {'lebosdk' => 'cm@hpplay.cn' }
   s.license      = 'MIT'
  # s.homepage     = 'https://github.com/lebosdk/LBLelinkKit'
