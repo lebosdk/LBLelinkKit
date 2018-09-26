@@ -38,6 +38,15 @@
  */
 + (BOOL)authWithAppid:( NSString * _Nonnull )appid secretKey:( NSString * _Nonnull )secretKey error:( NSError * _Nullable *)errPtr;
 
+
+/**
+ 注册成为互动广告的监听者
+ 
+ 默认不是互动广告的监听者，需要调用此接口来注册成为互动广告的监听者，可以在投屏时监听到互动广告，通过LBLelinkConnectionDelegate的代理方法传出
+ - (void)lelinkConnection:(LBLelinkConnection *)connection didReceiveAdInfo:(LBADInfo *)adInfo;
+ */
++ (void)registerAsInteractiveAdObserver;
+
 /**
  设置用户唯一标识，用于云端存取用户的远程设备信息
  非必要的设置，不设置，则不进行云端存取，仅本地存取
