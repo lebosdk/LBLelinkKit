@@ -13,3 +13,4 @@ echo manual run following steps:
 echo "step1: git push origin master"
 echo "step2: git tag v$new_version"
 echo "step3: git push origin v$new_version"
+echo "step4: pod trunk push"
