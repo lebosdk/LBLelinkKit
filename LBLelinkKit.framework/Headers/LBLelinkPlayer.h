@@ -11,6 +11,7 @@
 @class LBLelinkPlayer;
 @class LBLelinkConnection;
 @class LBLelinkPlayerItem;
+@class LBLelinkTextBarrage;
 
 @protocol LBLelinkPlayerDelegate <NSObject>
 
@@ -131,5 +132,49 @@
  @return YES支持，NO不支持
  */
 - (BOOL)canPlayMedia:(LBLelinkMediaType)mediaType;
+
+
+/** 是否隐藏弹幕 默认NO */
+@property (nonatomic,assign,getter=isHideBarrage)BOOL hideBarrage;
+/** 是否暂停弹幕 默认NO */
+@property (nonatomic,assign,getter=isPauseBarrage)BOOL pauseBarrage;
+/** 弹幕最大行数 默认10行 */
+@property (nonatomic,assign)NSUInteger barrageMaxLine;
+/** 弹幕飞行速度 默认是LBLelinkBarrageFlySpeedTypeFastestFirst,同一速度下，弹幕文本越长,速度会较快 */
+@property (nonatomic,assign)LBLelinkBarrageFlySpeedType barrageFlySpeed;
+/** 是否从底部开始显示 默认是No */
+@property (nonatomic,assign,getter=isBarrageBottomStartShow)BOOL barrageBottomStartShow;
+/** 是否允许弹幕重叠 默认是No */
+@property (nonatomic,assign,getter=isAllowOverlap)BOOL barrageAllowOverlap;
+
+
+/**
+ 是否支持推送弹幕,支持弹幕,不代表现在可以推送,需在播放视频的情况下才会显示弹幕,可以用- (BOOL)canCurrentPushBarrage;判断
+
+ @return YES支持，NO不支持
+ */
+- (BOOL)canSupportPushBarrage;
+
+/**
+ 是否现在可以推送弹幕,支持推送弹幕的情况下且有视频正在播放,才能显示推送的弹幕
+
+ @return YES可以,NO不可以
+ */
+- (BOOL)canCurrentPushBarrage;
+
+/**
+ 推送弹幕数组,调用前先判断设备是否支持推送弹幕- (BOOL)canPushBarrage;
+ 
+ @param barrageAry 弹幕数组
+ 注意：如果弹幕数组超过1000条，请分开发送
+ */
+- (void)pushBarrageAry:(NSMutableArray<LBLelinkTextBarrage *> *)barrageAry;
+
+/**
+ 优先弹幕,快速插入的弹幕,调用前先判断设备是否支持推送弹幕- (BOOL)canPushBarrage;
+ 
+ @param barrage 单个弹幕
+ */
+- (void)pushPriorityBarrage:(LBLelinkTextBarrage *)barrage;
 
 @end

@@ -18,6 +18,7 @@
 #import <LBLelinkKit/LBLelinkCast.h>
 #import <LBLelinkKit/LBADInterface.h>
 #import <LBLelinkKit/LBADInfo.h>
+#import <LBLelinkKit/LBLelinkTextBarrage.h>
 
 @interface LBLelinkKit : NSObject
 

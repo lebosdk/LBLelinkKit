@@ -72,6 +72,22 @@ typedef NS_ENUM(NSUInteger, LBLelinkMediaType) {
 };
 
 
+/**
+ 弹幕飞行速度类型
+
+ - LBLelinkBarrageFlySpeedTypeFastestFirst: 最快第一飞行速度
+ - LBLelinkBarrageFlySpeedTypeSecond: 第二飞行速度
+ - LBLelinkBarrageFlySpeedTypeThird: 第三飞行速度
+ - LBLelinkBarrageFlySpeedTypeFourth: 第四飞行速度
+ - LBLelinkBarrageFlySpeedTypeSlowestFifth: 最慢第五飞行速度
+ */
+typedef NS_ENUM(NSUInteger, LBLelinkBarrageFlySpeedType) {
+    LBLelinkBarrageFlySpeedTypeFastestFirst = 1,
+    LBLelinkBarrageFlySpeedTypeSecond,
+    LBLelinkBarrageFlySpeedTypeThird,
+    LBLelinkBarrageFlySpeedTypeFourth,
+    LBLelinkBarrageFlySpeedTypeSlowestFifth,
+};
 
 
 /**

@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
 typedef NS_ENUM(NSInteger, LBLelinkPlayerErrorCode) {
     LBLelinkPlayerErrorUnknown = -3000,                             // 未知错误
     LBLelinkPlayerErrorPlayerItemIsNil = -3001,                     // LBLelinkPlayerItem为空
+    LBLelinkPlayerErrorPlayerAvailableBarrageIsNil = -3002,         // 有效LBLelinkTextBarrage为空
     LBLelinkPlayerErrorInnerLelinkConnectionNotConnected = -3100,   // 乐联：未连接
     LBLelinkPlayerErrorInnerLelinkReceiverPlayFailed = -3101,       // 乐联：接收端播放失败
     LBLelinkPlayerErrorUpnpUnavailable = -3200,                     // DLNA不可用
@@ -48,6 +49,7 @@ typedef NS_ENUM(NSInteger, LBLelinkPlayerErrorCode) {
     LBLelinkPlayerErrorIMUidIsNil = -3301,                          // 接收端的uid为空
     LBLelinkPlayerErrorIMMediaUrlIsNil = -3302,                     // 媒体播放url为空
     LBLelinkPlayerErrorIMPushFailed = - 3303,                       // IM推送失败
+    LBLelinkPlayerErrorNotSupportPushBarrage = -3401,               // 不支持推送弹幕
 };
 
 typedef NS_ENUM(NSInteger, LBADInterfaceErrorCode) {
