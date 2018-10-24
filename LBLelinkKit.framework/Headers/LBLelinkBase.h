@@ -43,14 +43,6 @@ typedef NS_ENUM(NSUInteger, LBLelinkPlayStatus) {
     LBLelinkPlayStatusError,
 };
 
-/**
- 媒体类型
-
- - LBLelinkMediaTypeVideoOnline: 在线视频媒体类型
- - LBLelinkMediaTypeAudioOnline: 在线音频媒体类型
- - LBLelinkMediaTypePhotoOnline: 在线图片媒体类型
- - LBLelinkMediaTypePhotoLocoal: 本地图片媒体类型
- */
 
 /**
  媒体类型
