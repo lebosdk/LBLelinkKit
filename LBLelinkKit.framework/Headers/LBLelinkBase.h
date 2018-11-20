@@ -65,6 +65,18 @@ typedef NS_ENUM(NSUInteger, LBLelinkMediaType) {
 
 
 /**
+ 媒体格式类型
+
+ - LBLelinkMediaFormatTypePhotoJpeg: 图片jpeg格式
+ - LBLelinkMediaFormatTypePhotoPng: 图片png格式
+ */
+typedef NS_ENUM(NSUInteger, LBLelinkMediaFormatType) {
+    LBLelinkMediaFormatTypePhotoJpeg = 0,
+    LBLelinkMediaFormatTypePhotoPng,
+};
+
+
+/**
  弹幕飞行速度类型
 
  - LBLelinkBarrageFlySpeedTypeFastestFirst: 最快第一飞行速度

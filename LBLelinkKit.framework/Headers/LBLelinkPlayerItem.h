@@ -31,4 +31,9 @@
  */
 @property (nonatomic, strong) NSData *mediaData;
 
+/**
+ 媒体格式,当mediaType为LBLelinkMediaTypePhotoLocal,需指定mediaData的格式
+ */
+@property (nonatomic, assign) LBLelinkMediaFormatType mediaFormatType;
+
 @end

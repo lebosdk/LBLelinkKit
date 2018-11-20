@@ -35,6 +35,10 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorIMUserRefusedDueToTimeout = -2204,       // 防骚扰模式：超时拒绝（新版本接收端增加）
     LBLelinkConnectionErrorIMUserRefusedDueToUserAction = -2205,    // 防骚扰模式：用户点击拒绝（新版本接收端增加）
     LBLelinkConnectionErrorIMUserRefusedDueToBlacklist = -2206,     // 防骚扰模式：发送端在接收端的黑名单列表中被自动拒绝（新版本接收端增加）
+    LBLelinkConnectionErrorInitiateConnectFailed = -2301,           // 发起连接失败
+    LBLelinkConnectionErrorDataEncryptFailed = -2301,               // 数据加密失败
+    LBLelinkConnectionErrorShakeHandsVerifyFailed = -2304,          // 握手验证失败
+    LBLelinkConnectionErrorHmacDataVerifyFailed = -2305,            // 数据签名验证失败
 };
 
 /** 播放相关错误代码 */
