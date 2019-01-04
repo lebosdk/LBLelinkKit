@@ -41,6 +41,40 @@
  */
 - (void)lelinkPlayer:(LBLelinkPlayer *)player progressInfo:(LBLelinkProgressInfo *)progressInfo;
 
+/**
+ 设置检测行为错误代理回调，注意此方法不是在调用“- (void)setMonitorActions:(NSArray <LBMonitorAction *> *)monitorActions;”后立即回调，
+ 而是在调用推送行为过程中才设置的，并且是设置错误才有回调，设置正确不回调。
+
+ @param player 当前播放器
+ @param error 错误信息
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player setMonitorActionError:(NSError *)error;
+
+/**
+ 防骚扰信息代理回调
+
+ @param player 当前播放器
+ @param harassInfo 防骚扰信息
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player harassInfo:(LBLelinkHarassInfo)harassInfo;
+
+/**
+ 乐播使用的透传数据
+
+ @param player 当前播放器
+ @param dataObj 从接收端透传过来数据对象
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player passthLeboInternalData:(id)dataObj;
+
+
+/**
+ 外部使用的透传数据
+
+ @param player 当前播放器
+ @param dataObj 从接收端透传过来的数据对象
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player passthExternalData:(id)dataObj;
+
 @end
 
 
@@ -71,6 +105,18 @@
  */
 - (instancetype)initWithConnection:(LBLelinkConnection *)connection;
 
+/**
+ 
+
+ @param monitorActions 监测行为数组
+ */
+
+/**
+ 设置接收端需要上报的监测行为
+
+ @param monitorActions 监测行为数组
+ */
+- (void)setMonitorActions:(NSArray <LBMonitorAction *> *)monitorActions;
 
 /**
  推送播放
@@ -176,5 +222,51 @@
  @param barrage 单个弹幕
  */
 - (void)pushPriorityBarrage:(LBLelinkTextBarrage *)barrage;
+
+
+/**
+ 是否支持播放器所需header信息,支持情况下在LBLelinkPlayerItem.headerInfo设置属性生效
+
+ @return YES可以,NO不可以
+ */
+- (BOOL)canSetterHeader;
+
+
+/**
+ 是否支持播放地址所需AES信息,支持情况下在LBLelinkPlayerItem.aesInfo设置属性生效
+
+ @return YES可以,NO不可以
+ */
+- (BOOL)canSetterAes;
+
+/**
+ 是否支持透传
+
+ @return YES:支持,NO:不支持
+ */
+- (BOOL)canPassthData;
+
+
+/**
+ 乐播app透传到对端数据
+ 
+ @param dataDic 数据字典
+ @param handlerType 对端处理模块
+ */
+- (void)passthLeBoInternalUseDataDic:(NSDictionary *)dataDic handlerType:(LBLelinkPassthHandlerType)handlerType;
+
+
+/**
+ 第三方app透传到对端数据
+ 
+ @param dataDic 数据字典
+ @param handlerType 对端处理数据模块,必填
+ @param targetAppId 对端处理数据的appid,必填
+ */
+- (void)passthThirdPartyExternalUseDataDic:(NSDictionary *)dataDic handlerType:(LBLelinkPassthHandlerType)handlerType targetAppId:(NSString *)targetAppId;
+
+- (void)passthErrorInfoWithErrorCode:(NSInteger)errorCode error:(NSString *)error handlerType:(LBLelinkPassthHandlerType)handlerType;
+
+
 
 @end

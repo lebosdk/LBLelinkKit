@@ -93,6 +93,71 @@ typedef NS_ENUM(NSUInteger, LBLelinkBarrageFlySpeedType) {
     LBLelinkBarrageFlySpeedTypeSlowestFifth,
 };
 
+/**
+ 防骚扰状态
+
+ - LBLelinkHarassStateWait: 等待
+ - LBLelinkHarassStateAllow: 允许
+ - LBLelinkHarassStateReject: 拒绝
+ */
+typedef NS_ENUM(NSInteger, LBLelinkHarassState) {
+    LBLelinkHarassStateWait = 1,
+    LBLelinkHarassStateAllow = 2,
+    LBLelinkHarassStateReject = 3,
+};
+
+/**
+ 防骚扰选择状态详情
+
+ - LBLelinkHarassStateDetailDefault: 默认无意义,在LBLelinkHarassStateWait时详情
+ - LBLelinkHarassStateDetailTimeout: 超时触发
+ - LBLelinkHarassStateDetailUserChoose: 用户手动选择
+ - LBLelinkHarassStateDetailListHistoryChoose: 发送端设备在白名单或者黑名单中,自动选择（允许 st为2）（拒绝 st为3)
+ */
+typedef NS_ENUM(NSInteger, LBLelinkHarassStateDetail) {
+    LBLelinkHarassStateDetailDefault = 0,
+    LBLelinkHarassStateDetailTimeout = 1,
+    LBLelinkHarassStateDetailUserChoose = 2,
+    LBLelinkHarassStateDetailListHistoryChoose = 3,
+};
+
+/**
+ 防骚扰状态和详情
+ */
+typedef struct {
+    LBLelinkHarassState state;
+    LBLelinkHarassStateDetail detail;
+}LBLelinkHarassInfo;
+
+typedef enum {//对端处理该数据的模块
+    LBLelinkPassthHandlerTypeApp = 1,
+    LBLelinkPassthHandlerTypeSDK = 2,
+}LBLelinkPassthHandlerType;
+
+
+typedef enum {//媒体资源信息
+    LBPassthMediaAssetMediaTypeLongVideo = 0, //长视频
+    LBPassthMediaAssetMediaTypeShortVideo = 1,//短视频
+    LBPassthMediaAssetMediaTypeLiveVideo = 2,//直播
+}LBPassthMediaAssetMediaType;
+
+
+/**
+ 媒体播放循环模式
+
+ - LBLelinkMediaPlayLoopModeDefault: 默认模式,播完结束
+ - LBLelinkMediaPlayLoopModeSingleCycle: 单曲循环
+ - LBLelinkMediaPlayLoopModeAllCycle: 全部循环
+ - LBLelinkMediaPlayLoopModeOrderPlay: 顺序循环
+ - LBLelinkMediaPlayLoopModeRandomPlay: 随机循环
+ */
+typedef NS_ENUM(NSInteger, LBLelinkMediaPlayLoopMode) {
+    LBLelinkMediaPlayLoopModeDefault = 0,
+    LBLelinkMediaPlayLoopModeSingleCycle,
+    LBLelinkMediaPlayLoopModeAllCycle,
+    LBLelinkMediaPlayLoopModeOrderPlay,
+    LBLelinkMediaPlayLoopModeRandomPlay,
+};
 
 /**
  播放进度信息
@@ -108,6 +173,65 @@ typedef NS_ENUM(NSUInteger, LBLelinkBarrageFlySpeedType) {
  总时长，单位秒
  */
 @property (nonatomic, assign) NSInteger duration;
+
+@end
+
+
+/**
+ 接收端监测上报的位置类型
+ 
+ - LBMonitorActionTypeOnStartPlay: 开始播放
+ - LBMonitorActionTypeOnStop: 停止播放(结束播放)
+ - LBMonitorActionTypeOnPause: 暂停播放
+ - LBMonitorActionTypeOnResume: 继续播放
+ */
+typedef NS_ENUM(NSUInteger, LBMonitorActionType) {
+    LBMonitorActionTypeOnStartPlay = 1,
+    LBMonitorActionTypeOnStop,
+    LBMonitorActionTypeOnPause,
+    LBMonitorActionTypeOnResume,
+};
+
+
+/**
+ 监测上报模型
+ */
+@interface LBMonitorAction : NSObject
+
++ (instancetype)monitorActionWithType:(LBMonitorActionType)type URLString:(NSString *)monitorURLString;
+
+/**
+ 监测上报的位置类型
+ */
+@property (nonatomic, assign) LBMonitorActionType type;
+
+/**
+ 监测上报的URL
+ */
+@property (nonatomic, copy) NSString *monitorURLString;
+
+@end
+
+
+/**
+ 播放器地址播放所需的AES模型
+ */
+@interface LBPlayerAesModel : NSObject
+
+/**
+ 加密模式 ,默认:@"1"
+ */
+@property (nonatomic,copy) NSString *model;
+
+/**
+ 加密key,必填
+ */
+@property (nonatomic,copy) NSString *key;
+
+/**
+ 加密iv,必填
+ */
+@property (nonatomic,copy) NSString *iv;
 
 @end
 

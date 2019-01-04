@@ -12,6 +12,7 @@ extern NSString * const __nonnull LBLelinkBrowserErrorDomain;
 extern NSString * const __nonnull LBLelinkConnectionErrorDomain;
 extern NSString * const __nonnull LBLelinkPlayerErrorDomain;
 extern NSString * const __nonnull LBADInterfaceErrorDomain;
+extern NSString * const __nonnull LBLelinkPassthErrorDomain;
 
 /** 搜索相关错误代码 */
 typedef NS_ENUM(NSInteger, LBLelinkBrowserErrorCode) {
@@ -36,9 +37,14 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorIMUserRefusedDueToUserAction = -2205,    // 防骚扰模式：用户点击拒绝（新版本接收端增加）
     LBLelinkConnectionErrorIMUserRefusedDueToBlacklist = -2206,     // 防骚扰模式：发送端在接收端的黑名单列表中被自动拒绝（新版本接收端增加）
     LBLelinkConnectionErrorInitiateConnectFailed = -2301,           // 发起连接失败
-    LBLelinkConnectionErrorDataEncryptFailed = -2301,               // 数据加密失败
+    LBLelinkConnectionErrorDataEncryptFailed = -2302,               // 数据加密失败
+    LBLelinkConnectionErrorXMLFormatFailed = -2303,                 // 数据xml格式化失败
     LBLelinkConnectionErrorShakeHandsVerifyFailed = -2304,          // 握手验证失败
     LBLelinkConnectionErrorHmacDataVerifyFailed = -2305,            // 数据签名验证失败
+    LBLelinkConnectionErrorScreenCodeAuthError = -2400,             // 屏幕码错误
+    LBLelinkConnectionErrorUserScreenCodeInputCancel = -2401,       // 用户屏幕码输入取消
+    LBLelinkConnectionErrorScreenCodeModelProhibitGrab = -2402,     // 屏幕码模式禁止抢占
+    LBLelinkConnectionErrorReceiverResponseError = - 2500,          // 对端回复错误
 };
 
 /** 播放相关错误代码 */
@@ -56,6 +62,7 @@ typedef NS_ENUM(NSInteger, LBLelinkPlayerErrorCode) {
     LBLelinkPlayerErrorNotSupportPushBarrage = -3401,               // 不支持推送弹幕
 };
 
+/** 互动广告相关错误 */
 typedef NS_ENUM(NSInteger, LBADInterfaceErrorCode) {
     LBADInterfaceErrorCodeAppIDAbsence = -4000,                     // APPID缺失
     LBADInterfaceErrorCodeADInfoNull = -4001,                       // 没有广告数据
@@ -64,4 +71,35 @@ typedef NS_ENUM(NSInteger, LBADInterfaceErrorCode) {
     LBADInterfaceErrorCodeUnknown = -4004,                          // 未知错误
 };
 
+/** 设置检测地址错误码 */
+typedef NS_ENUM(NSInteger, LBSetMonitorErrorCode) {
+    LBSetMonitorErrorCodeResponseNoData = -5000,
+    LBSetMonitorErrorCodeServerError = -5001,
+    LBSetMonitorErrorCodeParameterError = -5002,
+    LBSetMonitorErrorCodeAuthError = -5003,
+    LBSetMonitorErrorCodeMonitorInfoSendToTVFailed = -5004,
+    LBSetMonitorErrorCodeMonitorURLInconform = -5005,
+    LBSetMonitorErrorCodeTokenInvalid = -5006,
+    LBSetMonitorErrorCodeUnknown = -5007,
+};
 
+
+/** 透传相关错误代码 */
+typedef NS_ENUM(NSInteger, LBLelinkPassthErrorCode) {
+    LBLelinkPassthErrorNotSupportPassth = -5000,                    //不支持透传
+    LBLelinkPassthErrorDataIsNil = -5001,                           //数据为空
+    LBLelinkPassthErrorNotLeBoAPP = -5002,                          //不是乐播app
+    LBLelinkPassthErrorNotSpecifiedTargetAppId = -5003,             //未指定对端appid
+    LBLelinkPassthErrorConnectionNotConnected = -5004,              //未连接
+    LBLelinkPassthErrorJsonSerializationFailed = -5005,             //json序列化失败
+    LBLelinkPassthErrorDataHandleUnknown = -5006,                   //数据错误未知
+    LBLelinkPassthErrorDataHandleNotSupport = -5007,                //数据不支持
+    LBLelinkPassthErrorDataHandleAnalysisException = -5008,         //数据解析异常
+    LBLelinkPassthErrorDataHandleLackParam = -5009,                 //缺失必要参数
+    LBLelinkPassthErrorDataHandleAppIDError = -5010,                //转发的appID错误，与当前应用相同时才会转发
+    LBLelinkPassthErrorReceiverResponseUnknown = -5016,             //接收端回应未知异常
+    LBLelinkPassthErrorReceiverResponseNotSupport = -5017,          //接收端回应不支持的消息类型
+    LBLelinkPassthErrorReceiverResponseDataAnalysisException = -5018,//接收端回应数据解析异常
+    LBLelinkPassthErrorReceiverResponseLackParam = -5019,           //接收端回应缺少必要参数
+    LBLelinkPassthErrorReceiverResponseAppIDError = -5020,          //接收端回应appID错误
+};

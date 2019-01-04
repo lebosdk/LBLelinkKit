@@ -110,6 +110,18 @@
  */
 - (void)updateLelinkService:(LBLelinkService *)lelinkService;
 
+
+#pragma mark -
+/**
+ 点击搜索设备时上报
+ */
++ (void)reportAPPTVButtonAction;
+
+/**
+ 设备列表消失
+ */
+- (void)reportServiceListDisappear;
+
 @end
 
 

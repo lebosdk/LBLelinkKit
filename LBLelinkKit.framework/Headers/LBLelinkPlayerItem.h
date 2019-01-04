@@ -36,4 +36,45 @@
  */
 @property (nonatomic, assign) LBLelinkMediaFormatType mediaFormatType;
 
+
+/**
+ 播放器所需header信息
+ */
+@property (nonatomic, strong) NSDictionary *headerInfo;
+
+/**
+ 播放加密url地址所需的信息
+ */
+@property (nonatomic, strong) LBPlayerAesModel *aesModel;
+
+/**
+ 播放循环模式
+ */
+@property (nonatomic, assign) LBLelinkMediaPlayLoopMode loopMode;
+
+/**
+ 片源唯一ID,如需在接收端展现片源相关信息,需设置
+ */
+@property (nonatomic, copy) NSString *mediaId;
+
+/**
+ 视频媒体类型：直播，短视频，长视频
+ */
+@property (nonatomic, assign) LBPassthMediaAssetMediaType mediaAssetType;
+
+/**
+ 片源名称,如“阿凡达”,多个以";"分割
+ */
+@property (nonatomic, copy) NSString *mediaName;
+
+/**
+ 片源导演,多个以";"分割
+ */
+@property (nonatomic, copy) NSString *mediaDirector;
+
+/**
+ 片源主演,多个以";"分割
+ */
+@property (nonatomic, copy) NSString *mediaActor;
+
 @end
