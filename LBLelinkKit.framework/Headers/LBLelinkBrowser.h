@@ -88,6 +88,7 @@
 - (void)deleteLelinkService:(LBLelinkService *)lelinkService;
 
 /**
+ 该接口废弃
  将支持跨网连接的服务设置为是否常用服务
 
  @param lelinkService 支持跨网连接的服务

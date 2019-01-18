@@ -12,15 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  乐播广告类型
-
- - LBADTypePicture: 图片广告
- - LBADTypeVideo: 视频广告
- - LBADTypeInteractive: 互动广告
  */
 typedef NS_ENUM(NSUInteger, LBADType) {
-    LBADTypePicture = 1,
-    LBADTypeVideo,
-    LBADTypeInteractive,
+    LBADTypePicture = 1,     // 图片广告
+    LBADTypeVideo,           // 视频广告
+    LBADTypeInteractive,     // 互动广告
 };
 
 

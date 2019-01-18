@@ -11,114 +11,111 @@
 
 /**
  SDK服务类型
-
- - LBLelinkServiceTypeLelink: 乐联：局域网内的乐联投屏协议
- - LBLelinkServiceTypeDlnaDMC: DLNA的DMC：局域网内的DLNA的DMC投屏协议
- - LBLelinkServiceTypePublickNetwork: 公网：通过服务器与接收端建立连接
  */
 typedef NS_OPTIONS(NSUInteger, LBLelinkServiceType) {
-    LBLelinkServiceTypeLelink = 1 << 0,
-    LBLelinkServiceTypeDlnaDMC = 1 << 1,
-    LBLelinkServiceTypePublickNetwork = 1 << 2,
+    LBLelinkServiceTypeLelink = 1 << 0,         // 乐联：局域网内的乐联投屏协议
+    LBLelinkServiceTypeDlnaDMC = 1 << 1,        // DLNA的DMC：局域网内的DLNA的DMC投屏协议
+    LBLelinkServiceTypePublickNetwork = 1 << 2, // 公网：通过服务器与接收端建立连接
 };
 
 /**
  播放状态
-
- - LBLelinkPlayStatusUnkown: 未知状态
- - LBLelinkPlayStatusLoading: 视频正在加载状态
- - LBLelinkPlayStatusPlaying: 正在播放状态
- - LBLelinkPlayStatusPause: 暂停状态
- - LBLelinkPlayStatusStopped: 退出播放状态
- - LBLelinkPlayStatusCommpleted: 播放完成状态
- - LBLelinkPlayStatusError: 播放错误
  */
 typedef NS_ENUM(NSUInteger, LBLelinkPlayStatus) {
-    LBLelinkPlayStatusUnkown = 0,
-    LBLelinkPlayStatusLoading,
-    LBLelinkPlayStatusPlaying,
-    LBLelinkPlayStatusPause,
-    LBLelinkPlayStatusStopped,
-    LBLelinkPlayStatusCommpleted,
-    LBLelinkPlayStatusError,
+    LBLelinkPlayStatusUnkown = 0,    // 未知状态
+    LBLelinkPlayStatusLoading,       // 视频正在加载状态
+    LBLelinkPlayStatusPlaying,       // 正在播放状态
+    LBLelinkPlayStatusPause,         // 暂停状态
+    LBLelinkPlayStatusStopped,       // 退出播放状态
+    LBLelinkPlayStatusCommpleted,    // 播放完成状态
+    LBLelinkPlayStatusError,         // 播放错误
 };
 
 
 /**
  媒体类型
-
- - LBLelinkMediaTypeVideoOnline: 在线视频媒体类型
- - LBLelinkMediaTypeAudioOnline: 在线音频媒体类型
- - LBLelinkMediaTypePhotoOnline: 在线图片媒体类型
- - LBLelinkMediaTypePhotoLocal: 本地图片媒体类型
- - LBLelinkMediaTypeVideoLocal: 本地视频媒体类型 注意：需要APP层启动本地的webServer，生成一个本地视频的URL
- - LBLelinkMediaTypeAudioLocal: 本地音频媒体类型 注意：需要APP层启动本地的webServer，生成一个本地音频的URL
  */
 typedef NS_ENUM(NSUInteger, LBLelinkMediaType) {
-    LBLelinkMediaTypeVideoOnline = 0,
-    LBLelinkMediaTypeAudioOnline,
-    LBLelinkMediaTypePhotoOnline,
-    LBLelinkMediaTypePhotoLocal,
-    LBLelinkMediaTypeVideoLocal,
-    LBLelinkMediaTypeAudioLocal,
+    LBLelinkMediaTypeVideoOnline = 0,    // 在线视频媒体类型
+    LBLelinkMediaTypeAudioOnline,        // 在线音频媒体类型
+    LBLelinkMediaTypePhotoOnline,        // 在线图片媒体类型
+    LBLelinkMediaTypePhotoLocal,         // 本地图片媒体类型
+    LBLelinkMediaTypeVideoLocal,         // 本地视频媒体类型 注意：需要APP层启动本地的webServer，生成一个本地视频的URL
+    LBLelinkMediaTypeAudioLocal,         // 本地音频媒体类型 注意：需要APP层启动本地的webServer，生成一个本地音频的URL
 };
 
 
 /**
  媒体格式类型
-
- - LBLelinkMediaFormatTypePhotoJpeg: 图片jpeg格式
- - LBLelinkMediaFormatTypePhotoPng: 图片png格式
  */
 typedef NS_ENUM(NSUInteger, LBLelinkMediaFormatType) {
-    LBLelinkMediaFormatTypePhotoJpeg = 0,
-    LBLelinkMediaFormatTypePhotoPng,
+    LBLelinkMediaFormatTypePhotoJpeg = 0,  // 图片jpeg格式
+    LBLelinkMediaFormatTypePhotoPng,       // 图片png格式
 };
 
 
 /**
  弹幕飞行速度类型
-
- - LBLelinkBarrageFlySpeedTypeFastestFirst: 最快第一飞行速度
- - LBLelinkBarrageFlySpeedTypeSecond: 第二飞行速度
- - LBLelinkBarrageFlySpeedTypeThird: 第三飞行速度
- - LBLelinkBarrageFlySpeedTypeFourth: 第四飞行速度
- - LBLelinkBarrageFlySpeedTypeSlowestFifth: 最慢第五飞行速度
  */
 typedef NS_ENUM(NSUInteger, LBLelinkBarrageFlySpeedType) {
-    LBLelinkBarrageFlySpeedTypeFastestFirst = 1,
-    LBLelinkBarrageFlySpeedTypeSecond,
-    LBLelinkBarrageFlySpeedTypeThird,
-    LBLelinkBarrageFlySpeedTypeFourth,
-    LBLelinkBarrageFlySpeedTypeSlowestFifth,
+    LBLelinkBarrageFlySpeedTypeFastestFirst = 1,   // 最快第一飞行速度
+    LBLelinkBarrageFlySpeedTypeSecond,             // 第二飞行速度
+    LBLelinkBarrageFlySpeedTypeThird,              // 第三飞行速度
+    LBLelinkBarrageFlySpeedTypeFourth,             // 第四飞行速度
+    LBLelinkBarrageFlySpeedTypeSlowestFifth,       // 最慢第五飞行速度
+};
+
+
+/**
+ 弹幕行数
+ */
+typedef NS_ENUM (NSUInteger, LBLelinkBarrageSettingLines) {
+    LBLelinkBarrageSettingLinesONE = 1,  // 1行
+    LBLelinkBarrageSettingLinesTWO,      // 2行
+    LBLelinkBarrageSettingLinesTHREE,    // 3行
+    LBLelinkBarrageSettingLinesFOUR,     // 4行
+    LBLelinkBarrageSettingLinesFIVE,     // 5行
+    LBLelinkBarrageSettingLinesSIX,      // 6行
+    LBLelinkBarrageSettingLinesSEVEN,    // 7行
+    LBLelinkBarrageSettingLinesEIGHT,    // 8行
+    LBLelinkBarrageSettingLinesNINE,     // 9行
+    LBLelinkBarrageSettingLinesTEN       // 10行
+};
+
+
+/**
+ 弹幕飞行速度系数
+ */
+typedef NS_ENUM(NSUInteger, LBLelinkBarrageSettingSpeed) {
+    LBLelinkBarrageSettingSpeed_ONE = 1,     // 0.2
+    LBLelinkBarrageSettingSpeed_TWO,         // 0.4
+    LBLelinkBarrageSettingSpeed_THREE,       // 0.6
+    LBLelinkBarrageSettingSpeed_FOUR,        // 0.8
+    LBLelinkBarrageSettingSpeed_FIVE,        // 1.0
+    LBLelinkBarrageSettingSpeed_SIX,         // 1.1
+    LBLelinkBarrageSettingSpeed_SEVEN,       // 1.2
+    LBLelinkBarrageSettingSpeed_EIGHT,       // 1.3
+    LBLelinkBarrageSettingSpeed_NINE,        // 1.4
+    LBLelinkBarrageSettingSpeed_TEN           // 1.5
 };
 
 /**
  防骚扰状态
-
- - LBLelinkHarassStateWait: 等待
- - LBLelinkHarassStateAllow: 允许
- - LBLelinkHarassStateReject: 拒绝
  */
 typedef NS_ENUM(NSInteger, LBLelinkHarassState) {
-    LBLelinkHarassStateWait = 1,
-    LBLelinkHarassStateAllow = 2,
-    LBLelinkHarassStateReject = 3,
+    LBLelinkHarassStateWait = 1,   // 等待
+    LBLelinkHarassStateAllow = 2,  // 允许
+    LBLelinkHarassStateReject = 3, // 拒绝
 };
 
 /**
  防骚扰选择状态详情
-
- - LBLelinkHarassStateDetailDefault: 默认无意义,在LBLelinkHarassStateWait时详情
- - LBLelinkHarassStateDetailTimeout: 超时触发
- - LBLelinkHarassStateDetailUserChoose: 用户手动选择
- - LBLelinkHarassStateDetailListHistoryChoose: 发送端设备在白名单或者黑名单中,自动选择（允许 st为2）（拒绝 st为3)
  */
 typedef NS_ENUM(NSInteger, LBLelinkHarassStateDetail) {
-    LBLelinkHarassStateDetailDefault = 0,
-    LBLelinkHarassStateDetailTimeout = 1,
-    LBLelinkHarassStateDetailUserChoose = 2,
-    LBLelinkHarassStateDetailListHistoryChoose = 3,
+    LBLelinkHarassStateDetailDefault = 0,            // 默认无意义,在LBLelinkHarassStateWait时详情
+    LBLelinkHarassStateDetailTimeout = 1,            // 超时触发
+    LBLelinkHarassStateDetailUserChoose = 2,         // 用户手动选择
+    LBLelinkHarassStateDetailListHistoryChoose = 3,  // 发送端设备在白名单或者黑名单中,自动选择（允许 st为2）（拒绝 st为3)
 };
 
 /**
@@ -144,19 +141,13 @@ typedef enum {//媒体资源信息
 
 /**
  媒体播放循环模式
-
- - LBLelinkMediaPlayLoopModeDefault: 默认模式,播完结束
- - LBLelinkMediaPlayLoopModeSingleCycle: 单曲循环
- - LBLelinkMediaPlayLoopModeAllCycle: 全部循环
- - LBLelinkMediaPlayLoopModeOrderPlay: 顺序循环
- - LBLelinkMediaPlayLoopModeRandomPlay: 随机循环
  */
 typedef NS_ENUM(NSInteger, LBLelinkMediaPlayLoopMode) {
-    LBLelinkMediaPlayLoopModeDefault = 0,
-    LBLelinkMediaPlayLoopModeSingleCycle,
-    LBLelinkMediaPlayLoopModeAllCycle,
-    LBLelinkMediaPlayLoopModeOrderPlay,
-    LBLelinkMediaPlayLoopModeRandomPlay,
+    LBLelinkMediaPlayLoopModeDefault = 0,    // 默认模式,播完结束
+    LBLelinkMediaPlayLoopModeSingleCycle,    // 单曲循环
+    LBLelinkMediaPlayLoopModeAllCycle,       // 全部循环
+    LBLelinkMediaPlayLoopModeOrderPlay,      // 顺序循环
+    LBLelinkMediaPlayLoopModeRandomPlay,     // 随机循环
 };
 
 /**
@@ -179,17 +170,12 @@ typedef NS_ENUM(NSInteger, LBLelinkMediaPlayLoopMode) {
 
 /**
  接收端监测上报的位置类型
- 
- - LBMonitorActionTypeOnStartPlay: 开始播放
- - LBMonitorActionTypeOnStop: 停止播放(结束播放)
- - LBMonitorActionTypeOnPause: 暂停播放
- - LBMonitorActionTypeOnResume: 继续播放
  */
 typedef NS_ENUM(NSUInteger, LBMonitorActionType) {
-    LBMonitorActionTypeOnStartPlay = 1,
-    LBMonitorActionTypeOnStop,
-    LBMonitorActionTypeOnPause,
-    LBMonitorActionTypeOnResume,
+    LBMonitorActionTypeOnStartPlay = 1,   // 开始播放
+    LBMonitorActionTypeOnStop,            // 停止播放(结束播放)
+    LBMonitorActionTypeOnPause,           // 暂停播放
+    LBMonitorActionTypeOnResume,          // 继续播放
 };
 
 

@@ -12,6 +12,8 @@
 @class LBLelinkConnection;
 @class LBLelinkPlayerItem;
 @class LBLelinkTextBarrage;
+@class LBBarrageSetting;
+@class LBLelinkBase;
 
 @protocol LBLelinkPlayerDelegate <NSObject>
 
@@ -106,8 +108,6 @@
 - (instancetype)initWithConnection:(LBLelinkConnection *)connection;
 
 /**
- 
-
  @param monitorActions 监测行为数组
  */
 
@@ -179,21 +179,6 @@
  */
 - (BOOL)canPlayMedia:(LBLelinkMediaType)mediaType;
 
-
-/** 是否隐藏弹幕 默认NO */
-@property (nonatomic,assign,getter=isHideBarrage)BOOL hideBarrage;
-/** 是否暂停弹幕 默认NO */
-@property (nonatomic,assign,getter=isPauseBarrage)BOOL pauseBarrage;
-/** 弹幕最大行数 默认10行 */
-@property (nonatomic,assign)NSUInteger barrageMaxLine;
-/** 弹幕飞行速度 默认是LBLelinkBarrageFlySpeedTypeFastestFirst,同一速度下，弹幕文本越长,速度会较快 */
-@property (nonatomic,assign)LBLelinkBarrageFlySpeedType barrageFlySpeed;
-/** 是否从底部开始显示 默认是No */
-@property (nonatomic,assign,getter=isBarrageBottomStartShow)BOOL barrageBottomStartShow;
-/** 是否允许弹幕重叠 默认是No */
-@property (nonatomic,assign,getter=isAllowOverlap)BOOL barrageAllowOverlap;
-
-
 /**
  是否支持推送弹幕,支持弹幕,不代表现在可以推送,需在播放视频的情况下才会显示弹幕,可以用- (BOOL)canCurrentPushBarrage;判断
 
@@ -209,19 +194,18 @@
 - (BOOL)canCurrentPushBarrage;
 
 /**
- 推送弹幕数组,调用前先判断设备是否支持推送弹幕- (BOOL)canPushBarrage;
- 
- @param barrageAry 弹幕数组
- 注意：如果弹幕数组超过1000条，请分开发送
- */
-- (void)pushBarrageAry:(NSMutableArray<LBLelinkTextBarrage *> *)barrageAry;
-
-/**
- 优先弹幕,快速插入的弹幕,调用前先判断设备是否支持推送弹幕- (BOOL)canPushBarrage;
+ 快速推送弹幕,调用前先判断设备是否支持推送弹幕- (BOOL)canPushBarrage;
  
  @param barrage 单个弹幕
  */
 - (void)pushPriorityBarrage:(LBLelinkTextBarrage *)barrage;
+
+/**
+ 设置弹幕属性
+ 
+ @param barrageSetting 弹幕属性
+ */
+- (void)modifyBarrageSetting:(LBBarrageSetting *)barrageSetting;
 
 
 /**
@@ -265,8 +249,35 @@
  */
 - (void)passthThirdPartyExternalUseDataDic:(NSDictionary *)dataDic handlerType:(LBLelinkPassthHandlerType)handlerType targetAppId:(NSString *)targetAppId;
 
+/**
+ 透传错误数据到对端
+ */
 - (void)passthErrorInfoWithErrorCode:(NSInteger)errorCode error:(NSString *)error handlerType:(LBLelinkPassthHandlerType)handlerType;
 
 
+
+#pragma mark - 以下接口和属性已废弃
+/**
+ 推送弹幕数组,调用前先判断设备是否支持推送弹幕- (BOOL)canPushBarrage;
+ 
+ @param barrageAry 弹幕数组
+ 注意：如果弹幕数组超过1000条，请分开发送
+ */
+- (void)pushBarrageAry:(NSMutableArray<LBLelinkTextBarrage *> *)barrageAry DEPRECATED_MSG_ATTRIBUTE("This method has been deprecated!");
+/** 是否暂停弹幕 默认NO */
+@property (nonatomic,assign,getter=isPauseBarrage)BOOL pauseBarrage DEPRECATED_MSG_ATTRIBUTE("This attribute has been deprecated!");
+
+/** 弹幕飞行速度 默认是LBLelinkBarrageFlySpeedTypeFastestFirst,同一速度下，弹幕文本越长,速度会较快 */
+@property (nonatomic,assign)LBLelinkBarrageFlySpeedType barrageFlySpeed DEPRECATED_MSG_ATTRIBUTE("This attribute has been deprecated! Please use '- (void)modifyBarrageSetting:'");
+/** 是否从底部开始显示 默认是No */
+@property (nonatomic,assign,getter=isBarrageBottomStartShow)BOOL barrageBottomStartShow DEPRECATED_MSG_ATTRIBUTE("This attribute has been deprecated!");
+/** 是否允许弹幕重叠 默认是No */
+@property (nonatomic,assign,getter=isAllowOverlap)BOOL barrageAllowOverlap DEPRECATED_MSG_ATTRIBUTE("This attribute has been deprecated!");
+
+/** 弹幕最大行数 默认10行 */
+@property (nonatomic,assign)NSUInteger barrageMaxLine DEPRECATED_MSG_ATTRIBUTE("This attribute has been deprecated! Please use '- (void)modifyBarrageSetting:'");
+
+/** 是否隐藏弹幕 默认NO */
+@property (nonatomic,assign,getter=isHideBarrage) BOOL hideBarrage DEPRECATED_MSG_ATTRIBUTE("This attribute has been deprecated! Please use '- (void)modifyBarrageSetting:'");
 
 @end

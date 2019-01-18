@@ -62,7 +62,6 @@
 /** 连接状态，YES代表已连接，NO代表未连接 */
 @property (nonatomic, assign, getter=isConnected, readonly) BOOL connected;
 
-
 /**
  初始化方法，使用此方法初始化之后，需要设置连接代理属性以及用于连接的服务
 
