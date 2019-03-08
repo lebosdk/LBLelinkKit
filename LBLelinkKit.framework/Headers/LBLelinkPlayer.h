@@ -14,6 +14,7 @@
 @class LBLelinkTextBarrage;
 @class LBBarrageSetting;
 @class LBLelinkBase;
+@class LBLelinkService;
 
 @protocol LBLelinkPlayerDelegate <NSObject>
 
@@ -279,5 +280,16 @@
 
 /** 是否隐藏弹幕 默认NO */
 @property (nonatomic,assign,getter=isHideBarrage) BOOL hideBarrage DEPRECATED_MSG_ATTRIBUTE("This attribute has been deprecated! Please use '- (void)modifyBarrageSetting:'");
+
+
+#pragma mark - 获取接收端截图
+
+/**
+ 获取接收端设备的屏幕截图
+
+ @param service 接收端服务信息
+ @param completionHandler 完成回调，如果成功获取到截图，则imageData有值，error为nil， 反之imageData为nil，error有值
+ */
+- (void)getScreenCaptureWithLelinkService:(LBLelinkService *)service completionHandler:(void(^)(NSData * imageData, NSError * error))completionHandler;
 
 @end

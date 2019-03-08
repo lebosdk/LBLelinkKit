@@ -58,8 +58,10 @@ typedef NS_ENUM(NSInteger, LBLelinkPlayerErrorCode) {
     LBLelinkPlayerErrorIMConnectionNotConnected = -3300,            // IM未连接
     LBLelinkPlayerErrorIMUidIsNil = -3301,                          // 接收端的uid为空
     LBLelinkPlayerErrorIMMediaUrlIsNil = -3302,                     // 媒体播放url为空
-    LBLelinkPlayerErrorIMPushFailed = - 3303,                       // IM推送失败
+    LBLelinkPlayerErrorIMPushFailed = -3303,                        // IM推送失败
     LBLelinkPlayerErrorNotSupportPushBarrage = -3401,               // 不支持推送弹幕
+    LBLelinkPlayerErrorNotSupportGetScreenCapture = -3501,          // 不支持获取接收端屏幕截图
+    LBLelinkPlayererrorAlreadyBeCapturing = -3502,                   // 正在获取截图中
 };
 
 /** 互动广告相关错误 */
