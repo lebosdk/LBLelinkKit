@@ -20,6 +20,7 @@ Pod::Spec.new do |s|
 # Build settings
   s.requires_arc = true
   s.ios.library	 = 'xml2'
+  s.ios.library	 = 'libresolv.9'
   s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' }
   s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' }
 
