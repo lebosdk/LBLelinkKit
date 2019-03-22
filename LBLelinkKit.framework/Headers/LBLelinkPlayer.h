@@ -7,6 +7,7 @@
 //
 
 #import "LBLelinkBase.h"
+#import <UIKit/UIKit.h>
 
 @class LBLelinkPlayer;
 @class LBLelinkConnection;
@@ -291,5 +292,23 @@
  @param completionHandler 完成回调，如果成功获取到截图，则imageData有值，error为nil， 反之imageData为nil，error有值
  */
 - (void)getScreenCaptureWithLelinkService:(LBLelinkService *)service completionHandler:(void(^)(NSData * imageData, NSError * error))completionHandler;
+
+
+#pragma mark - 图片缩放和旋转指令
+
+/**
+ 缩放原图到显示区域
+ 
+ @param originalSize 原图大小
+ @param displayArea 显示区域，即显示的位置和宽高
+ */
+- (void)zoomFromSize:(CGSize)originalSize toDisplayArea:(CGRect)displayArea;
+
+/**
+ 图片旋转
+ 
+ @param angle 旋转到的角度值
+ */
+- (void)rotateAngle:(NSInteger)angle;
 
 @end
