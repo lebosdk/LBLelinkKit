@@ -18,8 +18,9 @@ extern NSString * const __nonnull LBLelinkPassthErrorDomain;
 typedef NS_ENUM(NSInteger, LBLelinkBrowserErrorCode) {
     LBLelinkBrowserErrorUnknown = -1000,                            // 未知错误
     LBLelinkBrowserErrorCodeNotAuth = -1005,                        // 乐播SDK未授权
-    LBLelinkBrowserErrorCanNotStartDLNA = -1100,                    // 启动DLNA搜索失败
+    LBLelinkBrowserErrorCanNotStartDLNA = -1100,                    // 启动DLNA搜索失败，此问题已优化，不会再有此错误码
     LBLelinkBrowserErrorUnsupportedQRCodeStringValue = -1200,       // 无法识别的二维码信息
+    LBLelinkBrowserErrorNoInternet = -1300,                         // 无网络
 };
 
 /** 连接相关错误代码 */
@@ -61,7 +62,10 @@ typedef NS_ENUM(NSInteger, LBLelinkPlayerErrorCode) {
     LBLelinkPlayerErrorIMPushFailed = -3303,                        // IM推送失败
     LBLelinkPlayerErrorNotSupportPushBarrage = -3401,               // 不支持推送弹幕
     LBLelinkPlayerErrorNotSupportGetScreenCapture = -3501,          // 不支持获取接收端屏幕截图
-    LBLelinkPlayererrorAlreadyBeCapturing = -3502,                   // 正在获取截图中
+    LBLelinkPlayererrorAlreadyBeCapturing = -3502,                  // 正在获取截图中
+    LBLelinkPlayererrorCaptureTimeOut = -3503,                      // 获取屏幕截图超时
+    LBLelinkPlayerErrorPushPhotoFail = -3601,                       // 推送照片失败
+    LBLelinkPlayerErrorStopPhotoFail = -3602,                       // 退出照片投屏失败
 };
 
 /** 互动广告相关错误 */

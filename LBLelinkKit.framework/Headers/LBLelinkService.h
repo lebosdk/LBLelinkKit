@@ -27,8 +27,16 @@
 @property (nonatomic, copy) NSString *tvUID;
 /** 接收端的IP地址 */
 @property (nonatomic, copy) NSString *ipAddress;
+/** linux端口 */
+@property (nonatomic, assign) NSInteger remotePort;
+/** android端口 */
+@property (nonatomic, assign) NSInteger port;
+
+
 /** 接收端包名 TV端乐播投屏apk的包名为com.hpplay.happyplay.aw，可在设备列表中判断receviverPackageName是否等于此包名，UI上可以加上推荐二字，用户的投屏体验更好*/
 @property (nonatomic, copy) NSString *receviverPackageName;
+/** 接收端DLNA的uuid，注意此字段只针对特殊渠道有效，非通用字段 */
+@property (nonatomic, copy) NSString *UDN;
 /** 接收端是否有可升级的新版本 此属性是搜到TV端乐播投屏apk有新版可更新时，可提示用户升级接收端，体验更好*/
 @property (nonatomic, assign) BOOL hasNewVersion;
 /**（非必要的）别名，开发者可开放出来供用户修改服务名称的别名，方便用户自己识别和区分自己的服务 */

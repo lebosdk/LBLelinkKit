@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class LBLelinkConnection;
 @class LBLelinkService;
 @class LBADInfo;
@@ -97,3 +99,4 @@
 - (void)disConnect;
 
 @end
+NS_ASSUME_NONNULL_END

@@ -20,6 +20,8 @@
 #import <LBLelinkKit/LBADInfo.h>
 #import <LBLelinkKit/LBLelinkTextBarrage.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface LBLelinkKit : NSObject
 
 /**
@@ -30,7 +32,8 @@
 + (void)enableLog:(BOOL)enable;
 
 /**
- 授权认证接口
+ 授权认证接口。
+ 注意：请在调试阶段确保SDK能正确的授权成功，否则，当连续出现100次授权请求失败，且没有任何一次授权成功过，则SDK功能搜索功能不再可用。
  
  @param appid 乐播开发者平台中注册的appID
  @param secretKey 乐播开发者平台中注册的密钥
@@ -68,6 +71,8 @@
  @param title 本地通知的title文本，默认文本为“发现一台可以投屏的电视”
  @param body 本地通知的body文本，默认文本为“把你手机上的内容投到大屏电视上，快来试试！”
  */
-+ (void)enableLocalNotification:(BOOL)enable alertTitle:(NSString *)title alertBody:(NSString *)body;
++ (void)enableLocalNotification:(BOOL)enable alertTitle:(NSString *_Nullable)title alertBody:(NSString *)body;
 
 @end
+
+NS_ASSUME_NONNULL_END
