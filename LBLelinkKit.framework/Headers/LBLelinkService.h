@@ -92,14 +92,4 @@
  */
 - (BOOL)isEqualToLelinkService:(LBLelinkService *)object;
 
-/**
- model转NSDictionary
- */
-- (NSDictionary *)dict;
-
-/**
- NSDictionary转model
- */
-+ (LBLelinkService *)lelinkServiceWithDict:(NSDictionary *)dict;
-
 @end
