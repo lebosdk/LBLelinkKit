@@ -123,6 +123,16 @@
  */
 - (void)reportServiceListDisappear;
 
+/**
+ 保存设备列表
+ */
+- (BOOL)saveServices:(NSArray <LBLelinkService *>*_Nonnull)lelinkServices;
+
+/**
+上次保存的设备
+*/
+- (NSArray <LBLelinkService *>*)lastServices;
+
 @end
 
 
