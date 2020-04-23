@@ -45,7 +45,8 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorScreenCodeAuthError = -2400,             // 屏幕码错误
     LBLelinkConnectionErrorUserScreenCodeInputCancel = -2401,       // 用户屏幕码输入取消
     LBLelinkConnectionErrorScreenCodeModelProhibitGrab = -2402,     // 屏幕码模式禁止抢占
-    LBLelinkConnectionErrorReceiverResponseError = - 2500,          // 对端回复错误
+    LBLelinkConnectionErrorReceiverResponseError = -2500,           // 对端回复错误
+    LBLelinkConnectionErrorDisconnectAbnormal = -2600,              // 连接异常断开错误
 };
 
 /** 播放相关错误代码 */

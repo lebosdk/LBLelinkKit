@@ -36,6 +36,13 @@
  */
 - (void)lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkServices:(NSArray <LBLelinkService *> *)services;
 
+/**
+ 检查设备状态代理：设备状态发生变化会触发，
+ 
+ 只调用checkOnlineStatus时才回调，会回调多次
+ */
+- (void)lelinkBrowser:(LBLelinkBrowser *)browser onlineStatusChanged:(BOOL)changed;
+
 @end
 
 
@@ -132,6 +139,11 @@
 上次保存的设备
 */
 - (NSArray <LBLelinkService *>*)lastServices;
+
+/**
+ 检测设备在线状态
+ */
+- (void)checkOnlineStatus:(NSArray <LBLelinkService *>*)services;
 
 @end
 

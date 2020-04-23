@@ -102,4 +102,9 @@
  */
 + (LBLelinkService *)lelinkServiceWithDict:(NSDictionary *)dict;
 
+/**
+ 检查设备的在线状态
+ */
+- (void)checkOnlineStatus;
+
 @end
