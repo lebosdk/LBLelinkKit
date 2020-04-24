@@ -10,8 +10,12 @@ new_version=$1
 [ "x$new_version" == "x" ] && echo "please input new version and exit" && exit 1
 sed -i .tmp s/$old_version/$new_version/g LBLelinkKit.podspec #ios中的sed需要一个临时文件来转换
 [ $? -ne 0 ] && echo "must run at ios system and so exit" && exit 1
+git status > diff.tmp
+echo modify as follow:
+cat diff.tmp
+diff_flag=`grep LBLelinkKit.framework/Info.plist diff.tmp`
+[ "x$diff_flag" == "x" ] && echo LBLelinkKit.framework/Info.plist not modify and check replaced LBLelinkKit.framework or not  && exit 1
 rm *.tmp
-git status
 git diff LBLelinkKit.podspec
 git add LBLelinkKit.podspec
 git add LBLelinkKit.framework
