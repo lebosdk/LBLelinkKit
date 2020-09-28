@@ -31,6 +31,8 @@
 @property (nonatomic, assign) NSInteger remotePort;
 /** android端口 */
 @property (nonatomic, assign) NSInteger port;
+/** 乐联服务端口 */
+@property (nonatomic, assign) NSInteger lelinkPort;
 
 
 /** 接收端包名 TV端乐播投屏apk的包名为com.hpplay.happyplay.aw，可在设备列表中判断receviverPackageName是否等于此包名，UI上可以加上推荐二字，用户的投屏体验更好*/
@@ -41,6 +43,8 @@
 @property (nonatomic, assign) BOOL hasNewVersion;
 /**（非必要的）别名，开发者可开放出来供用户修改服务名称的别名，方便用户自己识别和区分自己的服务 */
 @property (nonatomic, copy) NSString *alias;
+/**（非必要的）发送端登录的账号 */
+@property (nonatomic, copy) NSString *vuuid;
 /**（非必要的）是否为常用 */
 @property (nonatomic, assign, readonly, getter=isFrequentlyUsed) BOOL frequentlyUsed;
 /** (非必要的)曾经连接过的服务 */
@@ -49,6 +53,9 @@
 @property (nonatomic, assign, readonly, getter=isLastTimeConnected) BOOL lastTimeConnected;
 /** 是否从二维码获得的设备 */
 @property (nonatomic, assign, readonly, getter=isFromQRCode) BOOL fromQRCode;
+/** 接收端的渠道id */
+@property (nonatomic, copy) NSString *appID;
+
 
 /**
  服务可用状态，该服务包含三种类型的服务：乐联服务、DLNA服务和公网服务

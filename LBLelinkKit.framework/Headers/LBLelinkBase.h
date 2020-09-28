@@ -178,6 +178,31 @@ typedef NS_ENUM(NSUInteger, LBMonitorActionType) {
     LBMonitorActionTypeOnResume,          // 继续播放
 };
 
+/**
+ 倍速播放速率
+ */
+typedef NS_ENUM(NSUInteger, LBPlaySpeedRateType) {
+    LBPlaySpeedRate1_0X = 1,    // 1.0
+    LBPlaySpeedRate0_5X,        // 0.5
+    LBPlaySpeedRate0_75X,       // 0.75
+    LBPlaySpeedRate1_25X,       // 1.25
+    LBPlaySpeedRate1_5X,        // 1.5
+    LBPlaySpeedRate2_0X,        // 2.0
+};
+
+/**
+日志上报问题反馈类型
+*/
+typedef NS_ENUM (NSInteger, LBLogReportProblemType){
+    LBLogReportProblemTypePlayerCaton = 1 << 0,                    //播放片源卡顿
+    LBLogReportProblemTypePlayerBlackScreenHaveVoice = 1 << 1,     //播放片源黑屏有声音
+    LBLogReportProblemTypePlayerNotCanPlay= 1 << 2,                //播放片源无法播放
+    LBLogReportProblemTypePlayerCrashBack = 1 << 3,                //播放片源闪退
+    LBLogReportProblemTypePlayerImageCompression = 1 << 4,         //播放片源画面压缩
+    LBLogReportProblemTypePlayerLoadFailed = 1 << 5,               //播放片源加载失败
+    LBLogReportProblemTypePlayerSoundImageNotSync = 1 << 6,        //播放片源卡顿
+    LBLogReportProblemTypePlayerOther = 1 << 7,                    //其它问题
+};
 
 /**
  监测上报模型
@@ -218,6 +243,35 @@ typedef NS_ENUM(NSUInteger, LBMonitorActionType) {
  加密iv,必填
  */
 @property (nonatomic,copy) NSString *iv;
+
+@end
+
+
+/**
+接收端解码能力模型
+*/
+@interface LBDecodabilityModel : NSObject
++ (instancetype)decodabilityWithName:(NSString *)name type:(NSString *)type resolution:(NSString *)resolution;
+
+/**
+ 解码器名称，包括：avc、hevc、vp8、vp9
+ */
+@property (nonatomic, copy) NSString *name;
+
+/**
+ 解码器类型，包括：
+ video/avc
+ video/hevc
+ video/x-vnd.on2.vp8
+ video/x-vnd.on2.vp9
+ */
+
+@property (nonatomic, copy) NSString *type;
+
+/**
+最大分辨率，格式：宽*高（3840*2160）
+ */
+@property (nonatomic, copy) NSString *maxResolution;
 
 @end
 

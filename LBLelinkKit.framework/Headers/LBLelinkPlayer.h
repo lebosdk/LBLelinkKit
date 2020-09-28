@@ -79,6 +79,26 @@
  */
 - (void)lelinkPlayer:(LBLelinkPlayer *)player passthExternalData:(id)dataObj;
 
+/// 秘听功能的回调
+/// @param player 当前播放器
+/// @param data 音频数据
+- (void)lelinkPlayer:(LBLelinkPlayer *)player secretListenAudioData:(NSData *)data;
+/**
+ 倍速播放能力代理回调
+
+ @param player 当前播放器
+ @param playSpeed 播放速度
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player playSpeed:(double)playSpeed;
+
+/**
+ 倍速播放代理回调
+
+ @param player 当前播放器
+ @param error 倍速播放状态
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player playSpeedError:(NSError *)error;
+
 @end
 
 
@@ -92,7 +112,6 @@
 @property (nonatomic, strong) LBLelinkConnection *lelinkConnection;
 /** 播放媒体对象 */
 @property (nonatomic, strong) LBLelinkPlayerItem *item;
-
 
 /**
  初始化播放器，使用此方法初始化播放器后需要设置连接和代理
@@ -108,10 +127,6 @@
  @return 播放器实例
  */
 - (instancetype)initWithConnection:(LBLelinkConnection *)connection;
-
-/**
- @param monitorActions 监测行为数组
- */
 
 /**
  设置接收端需要上报的监测行为
@@ -171,6 +186,25 @@
  */
 - (void)reduceVolume;
 
+/**
+ 查询倍速播放能力
+ */
+- (BOOL)isSupportChangePlaySpeed;
+
+/**
+查询当前的播放速率
+ */
+- (void)getPlaySpeed;
+
+/**
+设置播放速率
+ */
+- (void)setPlaySpeedWithRate:(LBPlaySpeedRateType)rateType;
+
+/**
+播放速率换播放速率类型
+ */
+- (LBPlaySpeedRateType)playSpeedRateTypeWithRate:(double)rate;
 
 /**
  支持的媒体类型判断，在调用- (void)playWithItem:(LBLelinkPlayerItem *)item;之前，先进行判断是否支持该类型的媒体。
@@ -232,7 +266,6 @@
  */
 - (BOOL)canPassthData;
 
-
 /**
  乐播app透传到对端数据
  
@@ -256,7 +289,14 @@
  */
 - (void)passthErrorInfoWithErrorCode:(NSInteger)errorCode error:(NSString *)error handlerType:(LBLelinkPassthHandlerType)handlerType;
 
+/// 是否支持秘听
+- (BOOL)canPassthSecretListen;
 
+/// 透传启动秘听功能
+- (void)passthStartOverSecretListening;
+
+/// 透传关闭秘听功能
+- (void)passthStopSecretListening;
 
 #pragma mark - 以下接口和属性已废弃
 /**

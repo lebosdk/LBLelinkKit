@@ -13,6 +13,8 @@ extern NSString * const __nonnull LBLelinkConnectionErrorDomain;
 extern NSString * const __nonnull LBLelinkPlayerErrorDomain;
 extern NSString * const __nonnull LBADInterfaceErrorDomain;
 extern NSString * const __nonnull LBLelinkPassthErrorDomain;
+extern NSString * const __nonnull LBLelinkUserInteretsErrorDomain;
+extern NSString * const __nonnull LBLelinkLogErrorDomain;
 
 /** 搜索相关错误代码 */
 typedef NS_ENUM(NSInteger, LBLelinkBrowserErrorCode) {
@@ -21,6 +23,8 @@ typedef NS_ENUM(NSInteger, LBLelinkBrowserErrorCode) {
     LBLelinkBrowserErrorCanNotStartDLNA = -1100,                    // 启动DLNA搜索失败，此问题已优化，不会再有此错误码
     LBLelinkBrowserErrorUnsupportedQRCodeStringValue = -1200,       // 无法识别的二维码信息
     LBLelinkBrowserErrorNoInternet = -1300,                         // 无网络
+    LBLelinkBrowserErrorNoServiceType = -1400,                      // SDK服务类型设置错误
+    LBLelinkBrowserErrorMissingRequiredConfiguration = -1500,       // 缺少本地网络访问所需的配置，Info.plist中需要配置NSBonjourServices(_leboremote._tcp)和NSLocalNetworkUsageDescription，兼容iOS14
 };
 
 /** 连接相关错误代码 */
@@ -28,6 +32,7 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorUnknown = -2000,                         // 未知错误
     LBLelinkConnectionErrorLelinkServiceIsNil = -2001,              // LBLelinkService为空
     LBLelinkConnectionErrorIncrrectServiceType = -2002,             // 错误的ServiceType
+    LBLelinkConnectionErrorServiceAvailableAllInvalid = -2003,      // 服务所有有效性是无效的
     LBLelinkConnectionErrorInnerLelinkServiceIsNil = -2100,         // 内部的乐联服务数据为空
     LBLelinkConnectionErrorInnerLelinkReceiverLowVersion = -2101,   // 接收端的版本低，低于3.0
     LBLelinkConnectionErrorIMUidOfReceiverIsNil = -2200,            // 接收端uid为空
@@ -47,6 +52,7 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorScreenCodeModelProhibitGrab = -2402,     // 屏幕码模式禁止抢占
     LBLelinkConnectionErrorReceiverResponseError = -2500,           // 对端回复错误
     LBLelinkConnectionErrorDisconnectAbnormal = -2600,              // 连接异常断开错误
+    LBLelinkConnectionErrorConnectionReceiverSocketFailed = -2601   // 连接接收端Socket失败
 };
 
 /** 播放相关错误代码 */
@@ -67,6 +73,7 @@ typedef NS_ENUM(NSInteger, LBLelinkPlayerErrorCode) {
     LBLelinkPlayererrorCaptureTimeOut = -3503,                      // 获取屏幕截图超时
     LBLelinkPlayerErrorPushPhotoFail = -3601,                       // 推送照片失败
     LBLelinkPlayerErrorStopPhotoFail = -3602,                       // 退出照片投屏失败
+    LBLelinkPlayerErrorNotSupportChangePlaySpeed = -3701,           // 不支持倍速播放
 };
 
 /** 互动广告相关错误 */
@@ -93,20 +100,43 @@ typedef NS_ENUM(NSInteger, LBSetMonitorErrorCode) {
 
 /** 透传相关错误代码 */
 typedef NS_ENUM(NSInteger, LBLelinkPassthErrorCode) {
-    LBLelinkPassthErrorNotSupportPassth = -5000,                    //不支持透传
-    LBLelinkPassthErrorDataIsNil = -5001,                           //数据为空
-    LBLelinkPassthErrorNotLeBoAPP = -5002,                          //不是乐播app
-    LBLelinkPassthErrorNotSpecifiedTargetAppId = -5003,             //未指定对端appid
-    LBLelinkPassthErrorConnectionNotConnected = -5004,              //未连接
-    LBLelinkPassthErrorJsonSerializationFailed = -5005,             //json序列化失败
-    LBLelinkPassthErrorDataHandleUnknown = -5006,                   //数据错误未知
-    LBLelinkPassthErrorDataHandleNotSupport = -5007,                //数据不支持
-    LBLelinkPassthErrorDataHandleAnalysisException = -5008,         //数据解析异常
-    LBLelinkPassthErrorDataHandleLackParam = -5009,                 //缺失必要参数
-    LBLelinkPassthErrorDataHandleAppIDError = -5010,                //转发的appID错误，与当前应用相同时才会转发
-    LBLelinkPassthErrorReceiverResponseUnknown = -5016,             //接收端回应未知异常
-    LBLelinkPassthErrorReceiverResponseNotSupport = -5017,          //接收端回应不支持的消息类型
-    LBLelinkPassthErrorReceiverResponseDataAnalysisException = -5018,//接收端回应数据解析异常
-    LBLelinkPassthErrorReceiverResponseLackParam = -5019,           //接收端回应缺少必要参数
-    LBLelinkPassthErrorReceiverResponseAppIDError = -5020,          //接收端回应appID错误
+    LBLelinkPassthErrorNotSupportPassth = -6000,                    //不支持透传
+    LBLelinkPassthErrorDataIsNil = -6001,                           //数据为空
+    LBLelinkPassthErrorNotLeBoAPP = -6002,                          //不是乐播app
+    LBLelinkPassthErrorNotSpecifiedTargetAppId = -6003,             //未指定对端appid
+    LBLelinkPassthErrorConnectionNotConnected = -6004,              //未连接
+    LBLelinkPassthErrorJsonSerializationFailed = -6005,             //json序列化失败
+    LBLelinkPassthErrorDataHandleUnknown = -6006,                   //数据错误未知
+    LBLelinkPassthErrorDataHandleNotSupport = -6007,                //数据不支持
+    LBLelinkPassthErrorDataHandleAnalysisException = -6008,         //数据解析异常
+    LBLelinkPassthErrorDataHandleLackParam = -6009,                 //缺失必要参数
+    LBLelinkPassthErrorDataHandleAppIDError = -6010,                //转发的appID错误，与当前应用相同时才会转发
+    LBLelinkPassthErrorReceiverNotSupportManifestType = -6011,      //接收端sm中不支持的消息类型，
+    LBLelinkPassthErrorReceiverResponseUnknown = -6016,             //接收端回应未知异常
+    LBLelinkPassthErrorReceiverResponseNotSupport = -6017,          //接收端回应不支持的消息类型
+    LBLelinkPassthErrorReceiverResponseDataAnalysisException = -6018,//接收端回应数据解析异常
+    LBLelinkPassthErrorReceiverResponseLackParam = -6019,           //接收端回应缺少必要参数
+    LBLelinkPassthErrorReceiverResponseAppIDError = -6020,          //接收端回应appID错误
+};
+
+/** 权益相关错误码 */ 
+typedef NS_ENUM(NSInteger, LBLelinkInterestsErrorCode) {
+    LBLelinkInterestsCodeUnknownError = -7000,          // 未知错误
+    LBLelinkInterestsCodeUnloadError = -7001,           // 未进行请求
+    LBLelinkInterestsCodeInputDataError = -7002,        // 输入参数转json失败
+    LBLelinkInterestsCodeParameterError = -7003,        // 参数错误
+    LBLelinkInterestsCodeAuthError = -7004,             // 认证错误
+    LBLelinkInterestsCodeServerExceptionError = -7005,  // 服务器异常
+    LBLelinkInterestsCodeTokenExpireError = -7006,      // token失效
+    LBLelinkInterestsCodeDataError = -7007,             // 数据错误
+};
+
+/** 日志相关错误码 */
+typedef NS_ENUM(NSInteger,LBLelinkLogErrorCode) {
+    LBLelinkLogErrorCodeUploadLogFileNotExist = -8000,         //日志文件不存在
+    LBLelinkLogErrorCodeUploadLogFilePathEmpty = -8001,         //日志上传路径为空
+    LBLelinkLogErrorCodeUploadLogServerResponseFailure = -8002,    //日志上传服务器回复失败
+    LBLelinkLogErrorCodeUploadLogExistsIllegalCharacter = -8003,    //日志上传存在非法字符
+    LBLelinkLogErrorCodeUploadLogRequestFailed = -8004,    //日志上传请求失败
+    LBLelinkLogErrorCodeUploadLogFailedOther = - 8005,           //日志上传失败其它原因
 };

@@ -8,24 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-#import <LBLelinkKit/LBLelinkBrowser.h>
-#import <LBLelinkKit/LBLelinkService.h>
-#import <LBLelinkKit/LBLelinkConnection.h>
-#import <LBLelinkKit/LBLelinkPlayer.h>
-#import <LBLelinkKit/LBLelinkPlayerItem.h>
-#import <LBLelinkKit/LBLelinkError.h>
-#import <LBLelinkKit/LBLelinkBase.h>
-#import <LBLelinkKit/LBLelinkCast.h>
-#import <LBLelinkKit/LBADInterface.h>
-#import <LBLelinkKit/LBADInfo.h>
-#import <LBLelinkKit/LBLelinkTextBarrage.h>
+#import "LBLelinkBrowser.h"
+#import "LBLelinkService.h"
+#import "LBLelinkConnection.h"
+#import "LBLelinkPlayer.h"
+#import "LBLelinkPlayerItem.h"
+#import "LBLelinkError.h"
+#import "LBLelinkBase.h"
+#import "LBADInterface.h"
+#import "LBADInfo.h"
+#import "LBLelinkTextBarrage.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LBLelinkKit : NSObject
 
 /**
- 是否打开log
+ 是否打开log，打印输出在控制台
 
  @param enable YES代表打开，NO代表关闭，默认为NO
  */
@@ -59,7 +58,40 @@ NS_ASSUME_NONNULL_BEGIN
  @param userID 用户的唯一标识
  */
 + (void)setUserID:(NSString *)userID;
+
+/**
+设置用户唯一标识，用于云端存取用户的远程设备信息
+非必要的设置，不设置，则不进行云端存取，仅本地存取
+在用户登录成功的时候可进行设置
+
+@param userID 用户的唯一标识
+@param token 用户登录的令牌
+ */
++ (void)setUserID:(NSString *)userID token:(NSString *_Nullable)token;
+
+/**
+设置用户唯一标识，用于云端存取用户的远程设备信息
+非必要的设置，不设置，则不进行云端存取，仅本地存取
+在用户登录成功的时候可进行设置
+
+@param userID 用户的唯一标识
+@param token 用户登录的令牌
+@param nickName 用户的昵称
+ */
++ (void)setUserID:(NSString *)userID token:(NSString *)token nickName:(NSString *_Nullable)nickName;
+
+/// 设置用户唯一标识，用于云端存取用户的远程设备信息
+/// 非必要的设置，不设置，则不进行云端存取，仅本地存取
+/// 在用户登录成功的时候可进行设置
+/// @param userID 用户的唯一标识，对应的是 uuid
+/// @param token 用户的令牌，    对应的是 token
+/// @param nickName 用户的昵称, 对应的是 nickname
+/// @param uid 用户的uid，      对应的是 uid
++ (void)setUserID:(NSString *_Nullable)userID token:(NSString *_Nullable)token nickName:(NSString *_Nullable)nickName uid:(NSString *_Nullable)uid;
+
 + (void)clearUserID;
+
++ (NSArray *)getinterestsArray:(NSError * _Nullable *)error;
 
 /**
  设置搜索到设备时的本地通知
@@ -72,6 +104,22 @@ NS_ASSUME_NONNULL_BEGIN
  @param body 本地通知的body文本，默认文本为“把你手机上的内容投到大屏电视上，快来试试！”
  */
 + (void)enableLocalNotification:(BOOL)enable alertTitle:(NSString *_Nullable)title alertBody:(NSString *)body;
+
+/**
+ 是否打开log文件保存，保存在沙盒Caches文件夹,（最大10M日志）
+
+@param enable YES代表打开，NO代表关闭，默认为NO
+*/
++ (void)enableLogFileSave:(BOOL)enable;
+
+/**
+ log文件上传到乐播服务器
+
+@param problemType 问题类型
+@param contactInfo 用户联系信息
+@param callBlock 上传成功与否回调
+*/
++ (void)logFileUploadToLeBoServerWithProblemType:(LBLogReportProblemType)problemType userContactInfo:(NSString *)contactInfo callBlock:(void(^)(BOOL succeed ,NSString *_Nullable euqid,NSError * _Nullable error))callBlock;
 
 @end
 

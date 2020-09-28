@@ -30,11 +30,19 @@
 
 /**
  发现设备代理回调：一旦设备列表有变化就会回调
-
+ 
  @param browser 当前搜索工具
  @param services 设备列表
  */
 - (void)lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkServices:(NSArray <LBLelinkService *> *)services;
+
+/**
+ 扫码发现设备回调
+
+ @param browser 当前搜索工具
+ @param lelinkService 扫码发现的设备
+ */
+- (void)lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkServiceFromQRCode:(LBLelinkService *)lelinkService;
 
 /**
  检查设备状态代理：设备状态发生变化会触发，
@@ -44,9 +52,6 @@
 - (void)lelinkBrowser:(LBLelinkBrowser *)browser onlineStatusChanged:(BOOL)changed;
 
 @end
-
-
-
 
 /**
  设备搜索类
