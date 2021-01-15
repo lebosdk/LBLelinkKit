@@ -51,6 +51,13 @@
  */
 - (void)lelinkBrowser:(LBLelinkBrowser *)browser onlineStatusChanged:(BOOL)changed;
 
+/**
+ 本地网络权限被拒绝，APP层需引导用户去系统设置中打开本地网络开关(受苹果接口限制，xcode12及更高版本打出的包运行无本地网络权限才会有此回调)
+ 
+ @param browser 当前搜索工具
+*/
+- (void)lelinkBrowserLocalNetworkPermissionsPolicyDenied:(LBLelinkBrowser *)browser;
+
 @end
 
 /**

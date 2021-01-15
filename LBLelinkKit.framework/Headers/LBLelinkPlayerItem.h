@@ -77,4 +77,14 @@
  */
 @property (nonatomic, copy) NSString *mediaActor;
 
+/**
+自定义dlna协议DIDL-Lite中id的值
+*/
+@property (nonatomic, copy) NSString *dlnaDIDLId;
+
+/**
+自定义dlna协议DIDL-Lite中resolution的值
+*/
+@property (nonatomic, copy) NSString *dlnaDIDLResolution;
+
 @end
