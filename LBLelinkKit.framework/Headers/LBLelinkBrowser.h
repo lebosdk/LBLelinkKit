@@ -10,6 +10,8 @@
 
 #import "LBLelinkBase.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class LBLelinkBrowser;
 @class LBLelinkService;
 
@@ -159,5 +161,5 @@
 
 @end
 
-
+NS_ASSUME_NONNULL_END
 

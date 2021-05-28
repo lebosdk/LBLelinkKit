@@ -12,6 +12,7 @@
 @class LEBUPnPDevice;
 @class LBInnerLelinkDeviceModel;
 @class LBIMServiceModel;
+@class LBLelinkConnection;
 
 @interface LBLelinkService : NSObject
 
@@ -55,8 +56,8 @@
 @property (nonatomic, assign, readonly, getter=isFromQRCode) BOOL fromQRCode;
 /** 接收端的渠道id */
 @property (nonatomic, copy) NSString *appID;
-
-
+/** 接收端的mirrorReconnect,内部使用*/
+@property (nonatomic, assign)NSInteger mirrorReconnect;
 /**
  服务可用状态，该服务包含三种类型的服务：乐联服务、DLNA服务和公网服务
  */
@@ -90,6 +91,7 @@
 /** 公网服务数据模型 */
 @property (nonatomic, strong) LBIMServiceModel *imDevice;
 
+@property (nonatomic, weak) LBLelinkConnection *lelinkConnection;
 
 /**
  比较两个LelinkService是否是同一个

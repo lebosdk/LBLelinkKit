@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "LBLelinkBase.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @class LBLelinkConnection;
@@ -86,6 +86,13 @@ NS_ASSUME_NONNULL_BEGIN
 @param body 消息体,可能是NSDictionary或 NSString
 */
 - (void)lelinkConnection:(LBLelinkConnection *)connection serverPassAppDataWithAction:(NSString *)action body:(id)body;
+
+
+/**收到镜像暂停/继续透传指令
+@param connection 当前
+@param mirrorActionType 镜像行动类型
+ */
+- (void)lelinkConnection:(LBLelinkConnection *)connection passthMirrorActionType:(LBPassthMirrorActionType)mirrorActionType;
 @end
 
 
@@ -158,6 +165,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)passthJournalFileWithEid:(NSString *)eid euqid:(NSString *)euqid et:(NSString *)et;
 
+- (BOOL)canPassthPerformedMirrorAction;
+
+- (void)passthPerformedMirrorActionType:(LBPassthMirrorActionType)mirrorActionType;
 
 @end
 NS_ASSUME_NONNULL_END

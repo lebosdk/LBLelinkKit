@@ -52,7 +52,9 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorScreenCodeModelProhibitGrab = -2402,     // 屏幕码模式禁止抢占
     LBLelinkConnectionErrorReceiverResponseError = -2500,           // 对端回复错误
     LBLelinkConnectionErrorDisconnectAbnormal = -2600,              // 连接异常断开错误
-    LBLelinkConnectionErrorConnectionReceiverSocketFailed = -2601   // 连接接收端Socket失败
+    LBLelinkConnectionErrorConnectionReceiverSocketFailed = -2601,  // 连接接收端Socket失败
+    LBLelinkConnectionErrorJsonSerializationFailed = -2602,         //json序列化失败
+    LBLelinkConnectionErrorTokenTokenEmptyNeedReauthorize = -2603,  //token为空需重新授权
 };
 
 /** 播放相关错误代码 */

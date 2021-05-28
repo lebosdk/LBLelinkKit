@@ -91,6 +91,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)clearUserID;
 
+
+/// 设置appGroupId，用与扩展程序集成SDK共享使用
+/// @param appGroupId appGroupId
++ (void)setAppGroupId:(NSString *)appGroupId;
+
 + (NSArray *)getinterestsArray:(NSError * _Nullable *)error;
 
 /**

@@ -204,6 +204,11 @@ typedef NS_ENUM (NSInteger, LBLogReportProblemType){
     LBLogReportProblemTypePlayerOther = 1 << 7,                    //其它问题
 };
 
+typedef NS_ENUM (NSInteger, LBPassthMirrorActionType){
+    LBPassthMirrorActionTypeSuspend = 0,    //镜像暂停
+    LBPassthMirrorActionTypePlay = 1,       //镜像继续
+};
+
 /**
  监测上报模型
  */
