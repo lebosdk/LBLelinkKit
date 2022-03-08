@@ -19,19 +19,53 @@ typedef NS_OPTIONS(NSUInteger, LBLelinkServiceType) {
 };
 
 /**
+ 服务来源方式
+ */
+typedef NS_OPTIONS(NSUInteger, LBLelinkServiceSourceStyle) {
+    LBLelinkServiceSourceStyleUnkown = 0,               // 来源未知
+    LBLelinkServiceSourceStyleSearchMDNS = 1 << 0,      // mdns搜索
+    LBLelinkServiceSourceStyleSearchUPNP = 1 << 1,       // upnp搜索
+    LBLelinkServiceSourceStyleInputCastCode = 1 << 2,    // 输入投屏码
+    LBLelinkServiceSourceStyleScanQRCode = 1 << 3,    // 扫描二维码码
+    LBLelinkServiceSourceStyleSearchUltrasound = 1 << 4, // 超声波搜索
+    LBLelinkServiceSourceStyleSearchBluetooth = 1 << 5,  // 蓝牙搜索
+    LBLelinkServiceSourceStyleWifiDirect = 1 << 6,  // wifiDirect
+    LBLelinkServiceSourceStyleBssidMatch = 1 << 7,  // 云端匹配发现（bssid+ip）
+    LBLelinkServiceSourceStyleTvUidAndAppIdMatch = 1 << 8,  // tvuid和appid云端匹配发现
+    LBLelinkServiceSourceStyleTvDsnAndAppIdMatch = 1 << 9,  // tvdsn和appid云端匹配发现
+    LBLelinkServiceSourceStylePhoneMatch = 1 << 10,  // 脱敏数据云端匹配发现
+};
+
+/**
+系统权限类型
+*/
+typedef NS_OPTIONS(NSUInteger, LBLelinkSystemPermissionsType) {
+    LBLelinkSystemPermissionsTypeLocalNetwork = 1,   // 本地网络权限
+    LBLelinkSystemPermissionsTypeMicrophone = 2,     // 麦克风录制权限，用于超声波搜索设备
+    LBLelinkSystemPermissionsTypeBluetooth = 3,      // 蓝牙权限，用于蓝牙扫描周边设备
+};
+
+/**
  播放状态
  */
 typedef NS_ENUM(NSUInteger, LBLelinkPlayStatus) {
-    LBLelinkPlayStatusUnkown = 0,    // 未知状态
-    LBLelinkPlayStatusLoading,       // 视频正在加载状态
-    LBLelinkPlayStatusPlaying,       // 正在播放状态
-    LBLelinkPlayStatusPause,         // 暂停状态
-    LBLelinkPlayStatusStopped,       // 退出播放状态
-    LBLelinkPlayStatusCommpleted,    // 播放完成状态
-    LBLelinkPlayStatusError,         // 播放错误
+    LBLelinkPlayStatusUnkown = 0,       // 未知状态
+    LBLelinkPlayStatusLoading,          // 视频正在加载状态
+    LBLelinkPlayStatusPlaying,          // 正在播放状态
+    LBLelinkPlayStatusPause,            // 暂停状态
+    LBLelinkPlayStatusStopped,          // 退出播放状态
+    LBLelinkPlayStatusCommpleted,       // 播放完成状态
+    LBLelinkPlayStatusEpisodeCommpleted,// 单集播放完成状态，还有续集将播放（推送视频列表时有效）
+    LBLelinkPlayStatusError,            // 播放错误
 };
 
-
+/**
+ 播放状态原因，因dlna和历史版本无法获取，暂不对提供
+ */
+typedef NS_ENUM(NSUInteger, LBLelinkPlayStatusReason) {
+    LBLelinkPlayStatusReasonUnkown = 0,         // 原因未知
+    LBLelinkPlayStatusReasonPreemptStopped,     // 抢占结束
+};
 /**
  媒体类型
  */
@@ -44,6 +78,15 @@ typedef NS_ENUM(NSUInteger, LBLelinkMediaType) {
     LBLelinkMediaTypeAudioLocal,         // 本地音频媒体类型 注意：需要APP层启动本地的webServer，生成一个本地音频的URL
 };
 
+/**
+视频清晰度类型
+*/
+typedef NS_OPTIONS(NSUInteger, LBLelinkVideoClarityType) {
+    LBLelinkVideoClarityTypeUnkown = 0,     // 视频清晰度未知
+    LBLelinkVideoClarityTypeStd = 2,        // 标清视频类型
+    LBLelinkVideoClarityTypeHigh = 4,       // 高清视频类型
+    LBLelinkVideoClarityTypeSuper = 6,      // 超清视频类型
+};
 
 /**
  媒体格式类型
@@ -279,4 +322,57 @@ typedef NS_ENUM (NSInteger, LBPassthMirrorActionType){
 @property (nonatomic, copy) NSString *maxResolution;
 
 @end
+
+typedef NS_ENUM (int8_t, LBLelinkTouchType){
+    LBLelinkTouchTypeBase = 0,//基础数据,例如 手指按下，手指移动，手指抬起
+    LBLelinkTouchTypeEvent = 1,//手势识别后的事件数据，例如 单击，双击，长按
+    LBLelinkTouchTypeZoom,//手势识别后的缩放数据
+};
+
+typedef NS_ENUM (int8_t, LBLelinkTouchActionType){
+    LBLelinkTouchActionTypeDown = 0, //按下
+    LBLelinkTouchActionTypeUp = 1,//抬起
+    LBLelinkTouchActionTypeMove = 2,//移动
+    LBLelinkTouchActionTypePointerDown = 5,//多指操作下，除第一根手指按下的其他手指按下事件
+    LBLelinkTouchActionTypePointerUp = 6,//多指操作下，除第一根手指按下的其他手指抬起事件
+};
+
+
+typedef NS_ENUM (int8_t, LBLelinkTouchEventType){
+    LBLelinkTouchEventTypeSingleTap = 0,//单击
+    LBLelinkTouchEventTypeDoubleTap = 1,//双击
+    LBLelinkTouchEventTypeLongPress = 2,//长按
+};
+
+@interface LBLelinkTouch : NSObject
+
+@property (nonatomic,assign)LBLelinkTouchType type;
+//x轴坐标比例（0-1.0）
+@property (nonatomic,assign)float x;
+//y轴坐标比例（0-1.0）
+@property (nonatomic,assign)float y;
+//动作类型，在type==LBLelinkTouchTypeBase有效
+@property (nonatomic,assign)LBLelinkTouchActionType actionType;
+//手指id，在type==LBLelinkTouchTypeBase有效
+@property (nonatomic,assign)int8_t pointerId;
+//活跃变化的手指Id，可能是其它手指的id，在type==LBLelinkTouchTypeBase有效
+@property (nonatomic,assign)int8_t activePointerId;
+//事件类型，在type==LBLelinkTouchTypeEvent有效
+@property (nonatomic,assign)LBLelinkTouchEventType eventType;
+//缩放比例，在type==LBLelinkTouchTypeZoom有效
+@property (nonatomic,assign)float zoomScale;
+
+@end
+
+typedef NS_OPTIONS(NSUInteger, LBLelinkProtocolType) {
+    LBLelinkProtocolTypeUnkown = 0,                 // 未知协议类型
+    LBLelinkProtocolTypeLelinkV1 = 1 << 0,          // 乐联V1协议：局域网内的乐联投屏协议
+    LBLelinkProtocolTypeLelinkV2 = 1 << 1,          // 乐联V2协议：局域网内的乐联投屏协议
+    LBLelinkProtocolTypeDLNA = 1 << 2,          // DLNA协议：局域网内的公共投屏协议
+    // DLNA的DMC：局域网内的DLNA的DMC投屏协议
+    LBLelinkProtocolTypePublickNetwork = 1 << 3,    // 公网连接：通过服务器与接收端建立连接
+    LBLelinkProtocolTypeAirplay = 1 << 4,           // airplay协议
+    LBLelinkProtocolTypeYoumeCloud = 1 << 5,        // youme云协议
+    LBLelinkProtocolTypeMiracast = 1 << 6,          // miracast协议
+};
 

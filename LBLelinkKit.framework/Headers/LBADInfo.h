@@ -54,10 +54,34 @@ typedef NS_ENUM(NSUInteger, LBADType) {
 @property (nonatomic, copy) NSString *text;
 /** 广告时长 */
 @property (nonatomic, assign) NSInteger duration;
-
 /** 子广告 */
 @property (nonatomic, strong) LBSubADInfo *subADInfo;
-
+// ad_sessionid 广告sessionid 标识唯一的一次广告行为；（hid+sessionid+uri+stamp）大写后 MD5 32位大写
+@property (nonatomic, copy) NSString *ads;
+// 广告位
+@property (nonatomic, copy) NSString *adpos;
+// is_interaction 是否交互跨屏，0不是，1是
+@property (nonatomic, assign) NSInteger itc;
+// 投屏的sessionid
+@property (nonatomic, copy) NSString *sessionId;
+//creative_id 广告创意节目id
+@property (nonatomic, assign) NSInteger cid;
+// thirdpartyPvMonitorUrls 第三方曝光检测 url数组
+@property (nonatomic, strong) NSArray *tpurl;
+// thirdpartyPvMonitorUrls 第三方曝光检测 url数组
+@property (nonatomic, strong) NSArray *tpurl2;
+// 上报监测时,header中是否上报UA,1为上报,0为不上报
+@property (nonatomic, assign) NSInteger postua;
+/// 广告协议
+@property (nonatomic, copy) NSString *apv;
+// 扩展字段
+@property (nonatomic, copy) NSString *ext;
+// 广告的uri
+@property (nonatomic, copy) NSString *uri;
+// 播放时间
+@property (nonatomic, assign) NSInteger playTime;
+// 记录上报步骤，1：playing 2:stop 只需上报一次
+@property (nonatomic, assign) NSInteger reportSteps;
 
 @end
 

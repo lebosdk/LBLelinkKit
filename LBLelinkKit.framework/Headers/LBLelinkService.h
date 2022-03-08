@@ -18,7 +18,8 @@
 
 /** 服务类型，即使用的服务协议支持乐联、DLNA、公网，以及三者的组合。注意，该字段使用者不用关心，仅仅SDK内部逻辑处理使用 */
 @property (nonatomic, assign) LBLelinkServiceType serviceType;
-
+/** 服务来源方式 */
+@property (nonatomic, assign) LBLelinkServiceSourceStyle sourceStyle;
 /**
  服务基本信息
  */
@@ -92,7 +93,12 @@
 @property (nonatomic, strong) LBIMServiceModel *imDevice;
 
 @property (nonatomic, weak) LBLelinkConnection *lelinkConnection;
-
+//lelink检测无效次数，0为有效
+@property (nonatomic, assign, readonly) NSInteger leinkCheckCounter;
+//dlna检测无效次数，0为有效
+@property (nonatomic, assign, readonly) NSInteger dlnaCheckCounter;
+//是否支持多通道切换
+@property (nonatomic, assign, getter=isMultiTunnels, readonly) BOOL multiTunnels;
 /**
  比较两个LelinkService是否是同一个
 
@@ -115,5 +121,10 @@
  检查设备的在线状态
  */
 - (void)checkOnlineStatus;
+
+/**
+ *  设置设备可用性
+ */
+- (void)setServiceAvailable:(int)serviceAvailable;
 
 @end

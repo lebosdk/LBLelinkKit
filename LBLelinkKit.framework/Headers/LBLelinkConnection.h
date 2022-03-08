@@ -15,6 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @class LBADInfo;
 @class LBDecodabilityModel;
 
+typedef NS_ENUM(NSInteger,LBMicroAppType) {
+    LBMicroAppTypeApk = 0,
+    LBMicroAppTypeWeex= 1,
+};
+
 @protocol LBLelinkConnectionDelegate <NSObject>
 
 @optional
@@ -93,6 +98,33 @@ NS_ASSUME_NONNULL_BEGIN
 @param mirrorActionType 镜像行动类型
  */
 - (void)lelinkConnection:(LBLelinkConnection *)connection passthMirrorActionType:(LBPassthMirrorActionType)mirrorActionType;
+
+
+/**收到可反控指令信息
+@param connection 当前
+@param bodyDic 反控信息
+ */
+- (void)lelinkConnection:(LBLelinkConnection *)connection passthEventReverseControlBodyDic:(NSDictionary *)bodyDic;
+
+/**收到遥控器事件信息
+@param connection 当前
+@param bodyDic 事件信息，键值信息参考 https://doc.hpplay.com.cn/web/#/20?page_id=303
+ 
+ */
+- (void)lelinkConnection:(LBLelinkConnection *)connection passthRemoteControlEventDic:(NSDictionary *)bodyDic;
+
+/** 收到微应用透传信息
+@param connection 当前
+@param dict 透传的信息
+ */
+- (void)lelinkConnection:(LBLelinkConnection *)connection microAppMessageWithDict:(NSDictionary*)dict;
+
+/** 收到微应用关闭信息
+@param connection 当前
+@param type  应用类型
+ */
+- (void)lelinkConnection:(LBLelinkConnection *)connection microAppCloseWithType:(LBMicroAppType)type;
+
 @end
 
 
@@ -125,7 +157,6 @@ NS_ASSUME_NONNULL_BEGIN
  @return 连接实例对象
  */
 - (instancetype)initWithLelinkService:(LBLelinkService * _Nullable)lelinkService delegate:(id<LBLelinkConnectionDelegate> _Nullable)delegate;
-
 
 /**
  连接，如果已经设置了用于连接的服务，则可直接调用此方法进行连接
@@ -169,5 +200,55 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)passthPerformedMirrorActionType:(LBPassthMirrorActionType)mirrorActionType;
 
+/// 能否支持反控
+- (BOOL)canPassthEventReverseControl;
+
+/// 透传通知接收端开启反控服务,收到- (void)lelinkConnection:(LBLelinkConnection *)connection passthEventReverseControlBodyDic:回调，可开始准备反控
+- (void)passthEventReverseControl;
+
+- (BOOL)canPassthRemoteControlEvent;
+- (void)passthListenRemoteControlSwitch:(BOOL)open;
+
+- (BOOL)canPushVideoList;
+
+/// 启动多通道连接，连接之前设置生效
+/// @param enable 启动与否，默认不启用
+- (void)enableMultiTunnels:(BOOL)enable;
+
+- (BOOL)canPassthPluginInfo;
+
+/// 微应用插件信息推送
+/// @param appId 应用ID
+/// @param type 应用类型
+/// @param pluginUrl 插件下载地址
+/// @param proof 插件下载地址校验信息
+/// @param loginInfo 登录信息
+- (void)passthPluginAppId:(NSString *)appId
+                     type:(LBMicroAppType)type
+                pluginUrl:(NSString *)pluginUrl
+                    proof:(NSString*)proof
+                loginInfo:(NSString *)loginInfo ;
+
+- (BOOL)canPassthMessageInfo;
+
+/// 微应用透传信息
+/// @param appId 应用appid
+/// @param type 插件类型
+/// @param content 消息内容
+- (void)passthMessageInfoWithAppId:(NSString *)appId
+                              type:(LBMicroAppType)type
+                           content:(NSString *)content ;
+
+- (BOOL)canPassthCloseMicroApp;
+
+/// 关闭微应用
+/// @param type 插件类型
+- (void)passthCloseMicroAppWithType:(LBMicroAppType)type;
+
+/// 获取连接的服务类型
+- (LBLelinkServiceType)getConnectedServiceType;
+
+/// 获取连接的协议类型
+- (LBLelinkProtocolType)getConnectedProtocolType;
 @end
 NS_ASSUME_NONNULL_END

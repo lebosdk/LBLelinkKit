@@ -20,6 +20,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol LBLelinkBrowserDelegate <NSObject>
 
+@required
+/**
+ 某种权限被否认，APP层需引导用户去系统设置中打开
+ LBLelinkSystemPermissionsTypeLocalNetwork本地网络权限被禁用时，将搜索不到任何设备，也无法连接局域网设备，需引导用户去设置中打开,强烈建议处理
+ LBLelinkSystemPermissionsTypeMicrophone麦克风权限被禁止时，无法通过超声波搜索设备，超声波可搜索不在同一wifi下的近距离设备
+ LBLelinkSystemPermissionsTypeBluetooth蓝牙权限被禁止时，无法通过BLE扫描设备，BLE可搜索不在同一wifi下的近距离设备
+ 
+ @param browser 当前搜索工具
+*/
+- (void)lelinkBrowser:(LBLelinkBrowser *)browser permissionsPolicyDenied:(LBLelinkSystemPermissionsType)systemPermissionsType;
+
 @optional
 
 /**
@@ -47,6 +58,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkServiceFromQRCode:(LBLelinkService *)lelinkService;
 
 /**
+ 某种方式发现一个设备回调
+ 例如：searchForLelinkServiceFormQRCode和searchForLelinkServiceFormTvUid方式获得的lelinkService
+
+@param browser 当前搜索工具
+@param lelinkService 发现的设备
+@param sourceStyle 设备来源方式
+*/
+- (void)lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkService:(LBLelinkService *)lelinkService fromSourceStyle:(LBLelinkServiceSourceStyle)sourceStyle;
+
+/**
  检查设备状态代理：设备状态发生变化会触发，
  
  只调用checkOnlineStatus时才回调，会回调多次
@@ -54,7 +75,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)lelinkBrowser:(LBLelinkBrowser *)browser onlineStatusChanged:(BOOL)changed;
 
 /**
- 本地网络权限被拒绝，APP层需引导用户去系统设置中打开本地网络开关(受苹果接口限制，xcode12及更高版本打出的包运行无本地网络权限才会有此回调)
+ 本地网络权限被拒绝
+ APP层需引导用户去系统设置中打开本地网络开关(受苹果接口限制，xcode12及更高版本打出的包运行无本地网络权限才会有此回调)
+ 无本地网络权限，将搜索不到任何设备，也无法连接局域网设备
  
  @param browser 当前搜索工具
 */
@@ -91,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)stop;
 
 /**
- 从二维码的字符串值中获取服务
+ 从二维码的字符串值中获取服务，必须子线程调用，会卡主线程
 
  @param QRCodeStringValue 二维码字符串值
  @param errPtr 错误
@@ -99,6 +122,69 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)searchForLelinkServiceFormQRCode:(NSString *)QRCodeStringValue onError:(NSError **)errPtr;
 
+/**I
+ 从投屏码中获取服务
+ 服务在代理方法中-lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkService:(LBLelinkService *)lelinkService fromSourceStyle:(LBLelinkServiceSourceStyle)sourceStyle 回调出来，sourceStyle == LBLelinkServiceSourceStyleInputCastCode时
+
+ @param castCode 接收端乐播投屏码
+ @param callBlock succeed:YES：解析成功，会在代理方法回调 NO：代表获取失败，不会在代理方法回调，originalInfo：请求的原始数据
+*/
+- (void)searchForLelinkServiceFormCastCode:(NSString *)castCode callBlock:(void(^)(BOOL succeed ,NSError * _Nullable error, NSDictionary *originalData))callBlock;
+
+/**I
+ 从tvuid的值中获取服务
+ 服务在代理方法中-lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkService:(LBLelinkService *)lelinkService fromSourceStyle:(LBLelinkServiceSourceStyle)sourceStyle 回调出来，sourceStyle == LBLelinkServiceSourceStyleTvUidAndAppIdMatch时
+
+ @param tvUid 接收端唯一id
+ @param appid 接收端渠道
+ @param callBlock succeed:YES：解析成功，会在代理方法回调 NO：代表获取失败，不会在代理方法回调
+*/
+- (void)searchForLelinkServiceFormTvUid:(NSString *)tvUid tvAppid:(NSString *)appid callBlock:(void(^)(BOOL succeed ,NSError * _Nullable error))callBlock;
+
+/**
+ 从tvDsn的值中获取服务
+ 同上
+ @param tvDsn 接收端设备号
+ @param appid 接收端渠道
+ @param callBlock succeed:YES：解析成功，会在代理方法回调 NO：代表获取失败，不会在代理方法回调
+*/
+- (void)searchForLelinkServiceFormTvDsn:(NSString *)tvDsn tvAppid:(NSString *)appid callBlock:(void(^)(BOOL succeed ,NSError * _Nullable error))callBlock;
+
+/**
+ 从tvDsn的值中获取服务
+ 1）服务在代理方法中 -lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkService:(LBLelinkService *)lelinkService fromSourceStyle:(LBLelinkServiceSourceStyle)sourceStyle  回调出来，sourceStyle == LBLelinkServiceSourceStylePhoneMatch时
+ 2）使用脱敏方法，需使用LBLelinkKit类所提供的 +desensitizationString:(NSString *)string 方法或者规则
+ 
+ @param desensitization 脱敏字符串
+ @param callBlock succeed:YES：解析成功，会在代理方法回调 NO：1）网络异常情况，不会在代理方法回调，2）查询数据为空情况，不会在代理方法回调
+*/
+- (void)searchForLelinkServiceFormPhone:(NSString *)desensitization callBlock:(void(^)(BOOL succeed ,NSError * _Nullable error))callBlock;
+
+/*
+ 禁止搜索服务方式
+ 现仅支持禁止LBLelinkServiceSourceStyleSearchUltrasound和LBLelinkServiceSourceStyleSearchBluetooth方式
+ 禁止LBLelinkServiceSourceStyleSearchUltrasound，在开始搜索时，将不会采集麦克风音频，不会触发麦克风权限申请，无法通过超声波搜索设备，超声波可搜索不在同一wifi下的近距离设备
+ 禁止LBLelinkServiceSourceStyleSearchBluetooth，在开始搜索时，将不会蓝牙扫描，不会触发蓝牙权限申请，无法通过BLE扫描设备，BLE可搜索不在同一wifi下的近距离设备
+ 设置LLBLelinkServiceSourceStyleUnkown，启用所有搜索服务方式，不禁止任何搜索来源方式
+ 默认禁止 LBLelinkServiceSourceStyleSearchUltrasound 和 LBLelinkServiceSourceStyleSearchBluetooth方式
+ 需要在调用searchForLelinkService前设置有效
+ @param serviceSourceStyle 服务来源方式
+ @param errPtr 错误
+ @return 结果,YES：设置成功，NO：设置失败
+ */
+- (BOOL)disableSearchLelinkServiceStyle:(LBLelinkServiceSourceStyle)serviceSourceStyle onError:(NSError **)errPtr;
+/*
+ 暂停搜索服务方式
+ 现仅支持暂停LBLelinkServiceSourceStyleSearchUltrasound和LBLelinkServiceSourceStyleSearchBluetooth方式
+ 禁止LBLelinkServiceSourceStyleSearchUltrasound，在搜索过程中，暂停采集麦克风音频
+ 禁止LBLelinkServiceSourceStyleSearchBluetooth，在搜索过程中，暂停蓝牙扫描
+
+ @param serviceSourceStyle 服务来源方式
+ @param errPtr 错误
+ @return 结果,YES：设置成功，NO：设置失败
+ */
+- (BOOL)pauseSearchLelinkServiceStyle:(LBLelinkServiceSourceStyle)serviceSourceStyle onError:(NSError **)errPtr;
+- (BOOL)continueSearchLelinkServiceStyle:(LBLelinkServiceSourceStyle)serviceSourceStyle onError:(NSError **)errPtr;
 #pragma mark - 服务管理，仅针对支持跨网投屏的服务有效
 
 /**
@@ -162,4 +248,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-

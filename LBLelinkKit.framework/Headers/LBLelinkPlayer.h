@@ -17,6 +17,8 @@
 @class LBLelinkBase;
 @class LBLelinkService;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol LBLelinkPlayerDelegate <NSObject>
 
 @optional
@@ -38,12 +40,28 @@
 - (void)lelinkPlayer:(LBLelinkPlayer *)player playStatus:(LBLelinkPlayStatus)playStatus;
 
 /**
+ 播放广告状态代理回调，从发端推送广告时会有回调
+
+ @param player 当前播放器
+ @param playADStatus 广告播放状态
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player playADStatus:(LBLelinkPlayStatus)playADStatus;
+
+/**
  播放进度信息代理回调
 
  @param player 当前播放器
  @param progressInfo 进度信息
  */
 - (void)lelinkPlayer:(LBLelinkPlayer *)player progressInfo:(LBLelinkProgressInfo *)progressInfo;
+
+/**
+ 播放广告进度信息代理回调，从发端推送广告时会有回调
+
+ @param player 当前播放器
+ @param aDProgressInfo 广告进度信息
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player aDProgressInfo:(LBLelinkProgressInfo *)aDProgressInfo;
 
 /**
  设置检测行为错误代理回调，注意此方法不是在调用“- (void)setMonitorActions:(NSArray <LBMonitorAction *> *)monitorActions;”后立即回调，
@@ -84,7 +102,7 @@
 /// @param data 音频数据
 - (void)lelinkPlayer:(LBLelinkPlayer *)player secretListenAudioData:(NSData *)data;
 /**
- 倍速播放能力代理回调
+ 播放倍速获取和同步回调
 
  @param player 当前播放器
  @param playSpeed 播放速度
@@ -98,6 +116,21 @@
  @param error 倍速播放状态
  */
 - (void)lelinkPlayer:(LBLelinkPlayer *)player playSpeedError:(NSError *)error;
+
+/**
+ 播放片源代理回调，在推送视频列表时有效
+
+ @param player 当前播放器
+ @param mediaId 当前播放的片源Id,视频列表时设置的LBLelinkPlayerItem.mediaId
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player currentMediaId:(NSString *)mediaId;
+
+
+/** 媒体资源推送后收端的响应，媒体推送到收端成功
+ @param player 当前播放器
+ @param mediaObject 媒体对象，item或itemArray
+ */
+- (void)lelinkPlayer:(LBLelinkPlayer *)player pushResponse:(id)mediaObject;
 
 @end
 
@@ -187,7 +220,7 @@
 - (void)reduceVolume;
 
 /**
- 查询倍速播放能力
+ 是否支持修改倍速播放，倍速修改能力查询
  */
 - (BOOL)isSupportChangePlaySpeed;
 
@@ -205,6 +238,12 @@
 播放速率换播放速率类型
  */
 - (LBPlaySpeedRateType)playSpeedRateTypeWithRate:(double)rate;
+
+
+/**
+ 是否支持倍速同步，收端修改倍速，同步发端，在- (void)lelinkPlayer:(LBLelinkPlayer *)player playSpeed:(double)playSpeed方法回调
+ */
+- (BOOL)canSupportPlaySpeedSync;
 
 /**
  支持的媒体类型判断，在调用- (void)playWithItem:(LBLelinkPlayerItem *)item;之前，先进行判断是否支持该类型的媒体。
@@ -298,6 +337,62 @@
 /// 透传关闭秘听功能
 - (void)passthStopSecretListening;
 
+/// 是否能缓存视频列表
+- (BOOL)canCacheVideoList;
+
+/// 缓存视频列表
+/// 暂只支持LBLelinkMediaTypeVideoOnline和LBLelinkMediaTypeVideoLocal视频片源，不支持缓存AES和设置headerInfo的片源，
+/// 可设置Item.mediaURLString和Item.firstFrameImgURLString视频首帧的图片地址，用于快速显示视频首帧画面
+/// 接收端会在后台下载片源，在播放时可以快速播放，预加载一组视频的作用,
+/// @param itemArray 视频item数组,设置Item.mediaURLString和Item.firstFrameImgURLString即可
+/// @param index 起始缓存的索引值
+- (void)cacheVideoList:(NSArray <LBLelinkPlayerItem *>*)itemArray startIndex:(NSInteger)index;
+
+#pragma mark - 以下区间是推送视频列表相关接口
+
+/// 是否能推送视频列表
+- (BOOL)canPushVideoList;
+
+/// 推送视频列表
+/// @param itemArray 视频item数组
+/// @param period 片源有效期时长，单位秒，必填，0代表长期有效
+/// @param mediaId 开始播放视频的媒体ID，非必填，默认从首个片源开始播放
+- (void)pushVideoList:(NSArray <LBLelinkPlayerItem *>*)itemArray validPeriod:(NSInteger)period startMediaId:(NSString *_Nullable)mediaId;
+
+
+/// 追加视频列表
+/// @param itemArray 视频item数组
+/// @param period 片源有效期时长，单位秒，必填，0代表长期有效
+- (void)appendVideoList:(NSArray <LBLelinkPlayerItem *>*)itemArray validPeriod:(NSInteger)period;
+
+
+/// 清空视频列表
+- (void)clearVideoList;
+
+/// 指定播放视频列表中某一集
+/// @param mediaId 片源ID
+- (void)playVideoListToMediaId:(NSString *)mediaId;
+
+
+/// 播放下一集
+- (void)playNextMediaInVideoList;
+
+/// 播放上一集
+- (void)playPrevMediaInVideoList;
+
+#pragma mark - Other
+
+/// 能否切换音轨，需收端版本功能支持
+- (BOOL)canSwitchAudioTrack;
+
+// 切换音轨，index：音轨索引,0:收端默认播放音轨，1:索引为1的音轨，需片源包含多音轨
+- (void)switchAudioTrackWithIndex:(NSInteger)index;
+
+/// 能否切换至临时独占模式,需收端功能支持并且在推送视频后
+- (BOOL)canSwitchTemporaryPrivateMode;
+/// 设置临时独占模式开关，本次投屏生效，
+- (void)switchTemporaryPrivateMode:(BOOL)open;
+
 #pragma mark - 以下接口和属性已废弃
 /**
  推送弹幕数组,调用前先判断设备是否支持推送弹幕- (BOOL)canPushBarrage;
@@ -352,3 +447,5 @@
 - (void)rotateAngle:(NSInteger)angle;
 
 @end
+
+NS_ASSUME_NONNULL_END

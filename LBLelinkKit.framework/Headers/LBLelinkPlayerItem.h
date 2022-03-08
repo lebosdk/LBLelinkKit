@@ -22,6 +22,11 @@
 @property (nonatomic, copy) NSString *mediaURLString;
 
 /**
+ 在线媒体的封面URL
+ */
+@property (nonatomic, copy) NSString *mediaAlbumArtURLString;
+
+/**
  音视频媒体的起播位置，单位秒
  */
 @property (nonatomic, assign) NSInteger startPosition;
@@ -86,5 +91,41 @@
 自定义dlna协议DIDL-Lite中resolution的值
 */
 @property (nonatomic, copy) NSString *dlnaDIDLResolution;
+
+/**
+ 视频首帧的图片地址，用于快速显示视频画面，仅支持设置缓存视频列表cacheVideoList接口时生效
+ */
+@property (nonatomic, copy) NSString *firstFrameImgURLString;
+/**
+自定义dlna协议DIDL-Lite中metaData的值
+*/
+@property (nonatomic, copy) NSString *metaData;
+
+/**
+ 不同清晰度的片源数组，仅推送视频列表有效
+*/
+@property (nonatomic, strong)NSArray<LBLelinkPlayerItem *> *itemClarityArray;
+
+/**
+ 清晰度类型，仅推送视频列表有效
+*/
+@property (nonatomic, assign) LBLelinkVideoClarityType clarityType;
+
+
+/// 视频分辨率宽
+@property (nonatomic, assign) NSInteger pixelWidth;
+/// 视频分辨率高
+@property (nonatomic, assign) NSInteger pixelHeight;
+
+/**
+ 片头的时长，单位是秒，设置后可跳过片头播放，仅推送视频列表有效
+*/
+@property (nonatomic, assign) NSInteger headDuration;
+
+/**
+ 片尾部的时长，单位是秒，设置后可跳过片尾播放
+*/
+@property (nonatomic, assign) NSInteger tailDuration;
+
 
 @end

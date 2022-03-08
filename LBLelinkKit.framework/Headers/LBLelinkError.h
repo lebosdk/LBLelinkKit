@@ -15,16 +15,28 @@ extern NSString * const __nonnull LBADInterfaceErrorDomain;
 extern NSString * const __nonnull LBLelinkPassthErrorDomain;
 extern NSString * const __nonnull LBLelinkUserInteretsErrorDomain;
 extern NSString * const __nonnull LBLelinkLogErrorDomain;
+extern NSString * const __nonnull LBLelinkReverseControlErrorDomain;
 
 /** 搜索相关错误代码 */
 typedef NS_ENUM(NSInteger, LBLelinkBrowserErrorCode) {
     LBLelinkBrowserErrorUnknown = -1000,                            // 未知错误
     LBLelinkBrowserErrorCodeNotAuth = -1005,                        // 乐播SDK未授权
+    LBLelinkBrowserErrorIncorrectParameter = -1010,                 // 参数错误
+    LBLelinkBrowserErrorReceiverLanUnableConnect = -1011,           // 与接收端局域网无法连接
+    LBLelinkBrowserErrorReceiverVersionNotSupport = -1012,          // 接收端版本不支持
+    LBLelinkBrowserErrorReceiverNotOnline = -1013,                  // 接收端不在线
     LBLelinkBrowserErrorCanNotStartDLNA = -1100,                    // 启动DLNA搜索失败，此问题已优化，不会再有此错误码
     LBLelinkBrowserErrorUnsupportedQRCodeStringValue = -1200,       // 无法识别的二维码信息
+    LBLelinkBrowserErrorCastCodeNotExist = -1201,                   // 投屏码不存在
     LBLelinkBrowserErrorNoInternet = -1300,                         // 无网络
     LBLelinkBrowserErrorNoServiceType = -1400,                      // SDK服务类型设置错误
     LBLelinkBrowserErrorMissingRequiredConfiguration = -1500,       // 缺少本地网络访问所需的配置，Info.plist中需要配置NSBonjourServices(_leboremote._tcp)和NSLocalNetworkUsageDescription，兼容iOS14
+    LBLelinkBrowserErrorDisableSearchStyleNotSupport = -1600,       // 禁止搜索方式不支持
+    LBLelinkBrowserErrorPauseSearchStyleNotSupport = -1601,         // 暂停搜索方式不支持
+    LBLelinkBrowserErrorContinueSearchStyleNotSupport = -1602,      // 继续搜索方式不支持
+    LBLelinkBrowserErrorNetworkRequestFailed = -1603,               // 网络请求失败
+    LBLelinkBrowserErrorRequestResponseStateAbnormal = -1604,       // 网络响应状态异常
+    LBLelinkBrowserErrorResponseDataIsEmpty = -1605,                // 脱敏字符匹配数据为空
 };
 
 /** 连接相关错误代码 */
@@ -42,6 +54,12 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorIMUserRefusedDueToTimeout = -2204,       // 防骚扰模式：超时拒绝（新版本接收端增加）
     LBLelinkConnectionErrorIMUserRefusedDueToUserAction = -2205,    // 防骚扰模式：用户点击拒绝（新版本接收端增加）
     LBLelinkConnectionErrorIMUserRefusedDueToBlacklist = -2206,     // 防骚扰模式：发送端在接收端的黑名单列表中被自动拒绝（新版本接收端增加）
+    LBLelinkConnectionErrorIMRequestParametersNotCorrect = -2207,   // IM请求参数不对
+    LBLelinkConnectionErrorIMAuthFailed = -2208,                   // IM授权失败
+    LBLelinkConnectionErrorIMTVOffline = -2209,                     // TV公网不在线
+    LBLelinkConnectionErrorIMServerError = -2210,                   // IM服务器错误
+    LBLelinkConnectionErrorIMTokenExpired = -2211,                  // IM的tonken过期
+    LBLelinkConnectionErrorIMResponseDataNil = -2212,               // IM响应参数为空
     LBLelinkConnectionErrorInitiateConnectFailed = -2301,           // 发起连接失败
     LBLelinkConnectionErrorDataEncryptFailed = -2302,               // 数据加密失败
     LBLelinkConnectionErrorXMLFormatFailed = -2303,                 // 数据xml格式化失败
@@ -55,6 +73,8 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorConnectionReceiverSocketFailed = -2601,  // 连接接收端Socket失败
     LBLelinkConnectionErrorJsonSerializationFailed = -2602,         //json序列化失败
     LBLelinkConnectionErrorTokenTokenEmptyNeedReauthorize = -2603,  //token为空需重新授权
+    LBLelinkConnectionErrorCurrentTemporaryNotAllowed  = -2604,     // 不允许抢占当前模式
+    LBLelinkConnectionErrorCurrentTemporaryMirroring = -2605,       // 设备镜像中
 };
 
 /** 播放相关错误代码 */
@@ -62,6 +82,7 @@ typedef NS_ENUM(NSInteger, LBLelinkPlayerErrorCode) {
     LBLelinkPlayerErrorUnknown = -3000,                             // 未知错误
     LBLelinkPlayerErrorPlayerItemIsNil = -3001,                     // LBLelinkPlayerItem为空
     LBLelinkPlayerErrorPlayerAvailableBarrageIsNil = -3002,         // 有效LBLelinkTextBarrage为空
+    LBLelinkPlayerErrorConnectionNotConnected = -3003,              // LBLelinkConnection未连接
     LBLelinkPlayerErrorInnerLelinkConnectionNotConnected = -3100,   // 乐联：未连接
     LBLelinkPlayerErrorInnerLelinkReceiverPlayFailed = -3101,       // 乐联：接收端播放失败
     LBLelinkPlayerErrorUpnpUnavailable = -3200,                     // DLNA不可用
@@ -76,6 +97,15 @@ typedef NS_ENUM(NSInteger, LBLelinkPlayerErrorCode) {
     LBLelinkPlayerErrorPushPhotoFail = -3601,                       // 推送照片失败
     LBLelinkPlayerErrorStopPhotoFail = -3602,                       // 退出照片投屏失败
     LBLelinkPlayerErrorNotSupportChangePlaySpeed = -3701,           // 不支持倍速播放
+    LBLelinkPlayerErrorNotSupportCacheVideoList = -3702,            // 不支持缓存视频列表
+    LBLelinkPlayerErrorNotSupportOperateOnADPlaying = -3703,        // 不支持操作在广告播放中
+    LBLelinkPlayerErrorNotSupportPushVideoList = -3801,             // 不支持推送视频列表
+    LBLelinkPlayerErrorItemArrayAbnormal = -3802,                   // ItemArray数据异常
+    LBLelinkPlayerErrorItemArrayCountExceedLimit = -3803,           // ItemArray数量超限，最大100个
+    LBLelinkPlayerErrorLelinkPlayerConnectionNotConnected = -3804,  // lelink播放器连接未连接
+    LBLelinkPlayerErrorJsonSerializationFailed = -3805,             //json序列化失败
+    LBLelinkPlayerErrorNotSupportSwitchAudioTrack = -3860,          // 不支持切换音轨
+    LBLelinkPlayerErrorNotSupportSwitchTemporaryPrivateMode = -3861,// 不支持临时独占模式
 };
 
 /** 互动广告相关错误 */
@@ -131,6 +161,15 @@ typedef NS_ENUM(NSInteger, LBLelinkInterestsErrorCode) {
     LBLelinkInterestsCodeServerExceptionError = -7005,  // 服务器异常
     LBLelinkInterestsCodeTokenExpireError = -7006,      // token失效
     LBLelinkInterestsCodeDataError = -7007,             // 数据错误
+    LBLelinkInterestsErrorCodeRequestFailed = -7008,    // 请求失败
+    LBLelinkInterestsErrorCodeSignVerifyFailed = -7009, // 签名验证失败
+    LBLelinkInterestsErrorCodeChannelNotEnabledLicenseAuthMode = -7010,  //渠道未启用License授权模式
+    LBLelinkInterestsErrorCodeDisabledLicenseAuthMode = -7011,           //已禁用License授权模式
+    LBLelinkInterestsErrorCodeLicenseAuthNumberFull = -7012,             //License授权数量已满
+    LBLelinkInterestsErrorCodeLicenseAuthOutsideTimeRange = -7013,       //超出License授权时间范围
+    LBLelinkInterestsErrorCodeLicenseAuthOther = -7014,                  //License授权其它错误
+    LBLelinkInterestsErrorCodeNoLocalLicenseData = -7015,                //无本地License授权数据，请联网授权
+    LBLelinkInterestsErrorCodeLackParam = -7016,                         //缺失必要参数
 };
 
 /** 日志相关错误码 */
@@ -141,4 +180,11 @@ typedef NS_ENUM(NSInteger,LBLelinkLogErrorCode) {
     LBLelinkLogErrorCodeUploadLogExistsIllegalCharacter = -8003,    //日志上传存在非法字符
     LBLelinkLogErrorCodeUploadLogRequestFailed = -8004,    //日志上传请求失败
     LBLelinkLogErrorCodeUploadLogFailedOther = - 8005,           //日志上传失败其它原因
+};
+
+typedef NS_ENUM(NSInteger,LBLelinkReverseControlErrorCode) {
+    LBLelinkReverseControlErrorLelinkConnectionIsNil = -9000,    //连接模型为空
+    LBLelinkReverseControlErrorConnectionNotConnected = -9001,   //未连接
+    LBLelinkReverseControlErrorParameterError = -9002,           //参数错误
+    LBLelinkReverseControlErrorInitiateConnectFailed = -9003,    // 发起连接失败
 };
