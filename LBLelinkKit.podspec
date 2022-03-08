@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 # Root specification
   s.name         = "LBLelinkKit"
-  s.version      = "31305"
+  s.version      = "31306"
   s.author            = {'lebosdk' => 'cm@hpplay.cn' }
   s.license      = 'MIT'
  # s.homepage     = 'https://github.com/lebosdk/LBLelinkKit'
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/lebosdk/LBLelinkKit.git", :tag => "v#{s.version}" }
 
 # Platform
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "9.0"
 
 # Build settings
   s.requires_arc = true
