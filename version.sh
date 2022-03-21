@@ -24,8 +24,8 @@ git commit -m "update framework to $new_version and modify to version $new_versi
 #需要切换xcode版本为xcode11:sudo xcode-select -s /Applications/Xcode11/Xcode.app/Contents/Developer
 #检查xcode版本：xcodebuild -version
 echo manual run following steps:
-echo "step1:git push origin master"
-echo "step2:pod lib lint LBLelinkKit.podspec"
+echo "step1: git push origin master"
+echo "step2: pod lib lint LBLelinkKit.podspec"
 echo "step3: git tag v$new_version"
 echo "step4: git push origin v$new_version"
 echo "step5: pod trunk push"
