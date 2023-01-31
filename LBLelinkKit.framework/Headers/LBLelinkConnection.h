@@ -19,8 +19,28 @@ typedef NS_ENUM(NSInteger,LBMicroAppType) {
     LBMicroAppTypeApk = 0,
     LBMicroAppTypeWeex= 1,
 };
+typedef NS_ENUM(NSInteger,LBPlayerControlType) {
+    LBPlayerControlTypeSwitch = 0, /// 播放器切换
+    LBPlayerControlTypeModel = 1, /// 视频播放模式
+    LBPlayerControlTypeRotating = 2, /// 角度旋转
+};
+@protocol LBLelinkWRMeetingDelegate <NSObject>
+/** 收到水兔透传信息
+@param connection 当前
+@param dict 透传的信息
+ */
+- (void)lelinkConnection:(LBLelinkConnection *)connection waterRabbitMessageWithDict:(NSDictionary*)dict;
+/**服务器传递给app指令信息
+@param connection 当前
+@param action 消息方法
+@param body 消息体,可能是NSDictionary或 NSString
+*/
+- (void)lelinkConnection:(LBLelinkConnection *)connection serverPassAppDataWithAction:(NSString *)action body:(id)body;
+
+@end
 
 @protocol LBLelinkConnectionDelegate <NSObject>
+
 
 @optional
 
@@ -125,6 +145,27 @@ typedef NS_ENUM(NSInteger,LBMicroAppType) {
  */
 - (void)lelinkConnection:(LBLelinkConnection *)connection microAppCloseWithType:(LBMicroAppType)type;
 
+/// 服务器普通消息通知
+/// @param connection 当前
+/// @param userInfo 信息
+/*
+ {
+
+  "uuid":13658 //用户账号，注意如果uuid不为空，终端要判断一下uuid是否与当前登录的账号一致，不一致就忽略这条消息
+  "type": 1      //消息含义 ：1 TV端二维码登录成功， 2 付费成功通知，  3 登录退出，账号绑定了其它设备，4 临时授权被挤掉
+  "content"："test"   //消息内容
+ }
+ */
+- (void)lelinkConnection:(LBLelinkConnection *)connection serverPassthNormalMessage:(NSDictionary *_Nullable)message;
+
+/**
+ 返回查询到播放器的设置端口数据
+ 调用[-passthCheckReceiverSetParma]查询播放器端口设置
+ @param connection 当前连接
+ @param mediaObject 媒体对象，item或itemArray
+ */
+- (void)lelinkConnection:(LBLelinkConnection *)connection passthReceiverSetReply:(NSDictionary *_Nullable)mediaObject;
+
 @end
 
 
@@ -136,6 +177,7 @@ typedef NS_ENUM(NSInteger,LBMicroAppType) {
 @property (nonatomic, strong) LBLelinkService *lelinkService;
 /** 连接代理 */
 @property (nonatomic, weak) id<LBLelinkConnectionDelegate> delegate;
+@property (nonatomic, weak) id<LBLelinkWRMeetingDelegate> meetingDelegate;
 /** 连接状态，YES代表已连接，NO代表未连接 */
 @property (nonatomic, assign, getter=isConnected, readonly) BOOL connected;
 /// 当前连接的镜像能力，0代表支持镜像，-1代表不支持镜像；默认为0
@@ -215,6 +257,9 @@ typedef NS_ENUM(NSInteger,LBMicroAppType) {
 /// @param enable 启动与否，默认不启用
 - (void)enableMultiTunnels:(BOOL)enable;
 
+/// 是否支持水兔
+- (BOOL)supportWaterRabbit;
+
 - (BOOL)canPassthPluginInfo;
 
 /// 微应用插件信息推送
@@ -245,10 +290,33 @@ typedef NS_ENUM(NSInteger,LBMicroAppType) {
 /// @param type 插件类型
 - (void)passthCloseMicroAppWithType:(LBMicroAppType)type;
 
+/// 水兔透传专用
+- (void)passthWaterRabbitDataDic:(NSDictionary *)dataDic tvUid:(NSString *)tvUid;
 /// 获取连接的服务类型
 - (LBLelinkServiceType)getConnectedServiceType;
 
 /// 获取连接的协议类型
 - (LBLelinkProtocolType)getConnectedProtocolType;
+
+/// 是否支持切换播放器模式
+- (BOOL)canPassthChangePlayerMode;
+/**
+ 播放器切换模式的类型
+ @param type 切换播放器的模式
+ @param commands 切换播放器的类型;例如:[@"1"]
+ type为LBPlayerControlTypeSwitch时，commands取值范围:[0:自动选择；1:系统播放器；2:乐播软解播放器；3:乐播硬解播放器];
+ type为LBPlayerControlTypeModel时，commands取值范围:[0:自动选择;1:标准模式;2:兼容模式];
+ type为LBPlayerControlTypeRotating时，commands取值范围:[0: 关闭;1:开启];
+ 
+ */
+- (void)passthChangePlayerCommandWithContorType:(LBPlayerControlType)type contorCommands:(NSArray <NSString *>*)commands;
+/// 是否支持查询播放器的设置
+- (BOOL)canPassthCheckReceiverSetParma;
+/**
+ 查询播放器所设置的参数
+ 通过LBLelinkConnectionDelegate代理[- (void)lelinkConnection: passthReceiverSetReply:]方法，拿到查询接口的数据;
+ */
+- (void)passthCheckReceiverSetParma;
+
 @end
 NS_ASSUME_NONNULL_END

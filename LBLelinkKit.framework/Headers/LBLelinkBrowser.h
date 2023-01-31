@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  搜索错误代理回调
-
+ 内部采用多种搜索方式，当其中一种搜索方式出现error的时候，不会影响其它搜索方式
  @param browser 当前搜索工具
  @param error 错误信息
  */
@@ -161,29 +161,47 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)searchForLelinkServiceFormPhone:(NSString *)desensitization callBlock:(void(^)(BOOL succeed ,NSError * _Nullable error))callBlock;
 
 /*
+ 该接口废弃，请使用 -enableSearchLelinkService:sourceStyle:onError: 方法
  禁止搜索服务方式
- 现仅支持禁止LBLelinkServiceSourceStyleSearchUltrasound和LBLelinkServiceSourceStyleSearchBluetooth方式
- 禁止LBLelinkServiceSourceStyleSearchUltrasound，在开始搜索时，将不会采集麦克风音频，不会触发麦克风权限申请，无法通过超声波搜索设备，超声波可搜索不在同一wifi下的近距离设备
- 禁止LBLelinkServiceSourceStyleSearchBluetooth，在开始搜索时，将不会蓝牙扫描，不会触发蓝牙权限申请，无法通过BLE扫描设备，BLE可搜索不在同一wifi下的近距离设备
- 设置LLBLelinkServiceSourceStyleUnkown，启用所有搜索服务方式，不禁止任何搜索来源方式
- 默认禁止 LBLelinkServiceSourceStyleSearchUltrasound 和 LBLelinkServiceSourceStyleSearchBluetooth方式
- 需要在调用searchForLelinkService前设置有效
  @param serviceSourceStyle 服务来源方式
  @param errPtr 错误
  @return 结果,YES：设置成功，NO：设置失败
  */
-- (BOOL)disableSearchLelinkServiceStyle:(LBLelinkServiceSourceStyle)serviceSourceStyle onError:(NSError **)errPtr;
+//- (BOOL)disableSearchLelinkServiceStyle:(LBLelinkServiceSourceStyle)serviceSourceStyle onError:(NSError **)errPtr;
+
+/*
+ 启用/关闭 服务搜索方式
+ 
+ 现仅支持LBLelinkServiceSourceStyleSearchBluetooth方式
+ 关闭LBLelinkServiceSourceStyleSearchBluetooth，在开始搜索时，将不会蓝牙扫描，不会触发蓝牙权限申请，无法通过BLE扫描设备，BLE可搜索不在同一wifi下的近距离设备
+ 默认关闭 LBLelinkServiceSourceStyleSearchBluetooth 搜索
+ 需要在调用searchForLelinkService前设置有效
+ 
+ @param enable 启用/关闭
+ @param serviceSourceStyle 服务来源方式
+ @param error 错误
+ @return 结果,YES：设置成功，NO：设置失败
+ */
+- (BOOL)enableSearchLelinkService:(BOOL)enable sourceStyle:(LBLelinkServiceSourceStyle)serviceSourceStyle onError:(NSError *)error;
 /*
  暂停搜索服务方式
- 现仅支持暂停LBLelinkServiceSourceStyleSearchUltrasound和LBLelinkServiceSourceStyleSearchBluetooth方式
- 禁止LBLelinkServiceSourceStyleSearchUltrasound，在搜索过程中，暂停采集麦克风音频
- 禁止LBLelinkServiceSourceStyleSearchBluetooth，在搜索过程中，暂停蓝牙扫描
-
+ 现仅支持暂停LBLelinkServiceSourceStyleSearchBluetooth方式
+ 暂停LBLelinkServiceSourceStyleSearchBluetooth，在搜索过程中，暂停蓝牙扫描
+ 需在调用enableSearchLelinkService:sourceStyle:onError:前设置有效
  @param serviceSourceStyle 服务来源方式
  @param errPtr 错误
  @return 结果,YES：设置成功，NO：设置失败
  */
 - (BOOL)pauseSearchLelinkServiceStyle:(LBLelinkServiceSourceStyle)serviceSourceStyle onError:(NSError **)errPtr;
+/*
+ 继续搜索服务方式
+ 现仅支持继续LBLelinkServiceSourceStyleSearchBluetooth方式
+ 继续LBLelinkServiceSourceStyleSearchBluetooth，在搜索过程中，继续蓝牙扫描
+ 需在调用enableSearchLelinkService:sourceStyle:onError:前设置有效
+ @param serviceSourceStyle 服务来源方式
+ @param errPtr 错误
+ @return 结果,YES：设置成功，NO：设置失败
+ */
 - (BOOL)continueSearchLelinkServiceStyle:(LBLelinkServiceSourceStyle)serviceSourceStyle onError:(NSError **)errPtr;
 #pragma mark - 服务管理，仅针对支持跨网投屏的服务有效
 

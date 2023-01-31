@@ -12,7 +12,7 @@
 @class LEBUPnPDevice;
 @class LBInnerLelinkDeviceModel;
 @class LBIMServiceModel;
-@class LBLelinkConnection;
+//@class LBLelinkConnection;
 
 @interface LBLelinkService : NSObject
 
@@ -92,13 +92,16 @@
 /** 公网服务数据模型 */
 @property (nonatomic, strong) LBIMServiceModel *imDevice;
 
-@property (nonatomic, weak) LBLelinkConnection *lelinkConnection;
+@property (nonatomic, weak) id lelinkConnection;
 //lelink检测无效次数，0为有效
 @property (nonatomic, assign, readonly) NSInteger leinkCheckCounter;
 //dlna检测无效次数，0为有效
 @property (nonatomic, assign, readonly) NSInteger dlnaCheckCounter;
 //是否支持多通道切换
 @property (nonatomic, assign, getter=isMultiTunnels, readonly) BOOL multiTunnels;
+/// 是否支持企业版
+@property (nonatomic, assign, getter=isSupportWr, readonly) BOOL supportWr;
+
 /**
  比较两个LelinkService是否是同一个
 
@@ -126,5 +129,11 @@
  *  设置设备可用性
  */
 - (void)setServiceAvailable:(int)serviceAvailable;
+
+/**
+ * 获取接收端渠道是否支持引流的字段 一个32位的无符号int值总共可以表示32个开关，目前开关固定从低位到高位开始
+ *  1 的时候就知道目前接收端渠道引流 如：00000000 000000000 00000000 00000001
+ */
+- (NSString *)getserviceDrainage;
 
 @end

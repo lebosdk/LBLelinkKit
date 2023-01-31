@@ -18,8 +18,7 @@
 #import "LBADInterface.h"
 #import "LBADInfo.h"
 #import "LBLelinkTextBarrage.h"
-#import "LBLelinkReverseControl.h"
-
+#import "LBLelinkServiceCategroy.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LBLelinkKit : NSObject
@@ -148,6 +147,12 @@ NS_ASSUME_NONNULL_BEGIN
 */
 + (void)logFileUploadToLeBoServerWithProblemType:(LBLogReportProblemType)problemType userContactInfo:(NSString *)contactInfo callBlock:(void(^)(BOOL succeed ,NSString *_Nullable euqid,NSError * _Nullable error))callBlock;
 
+/// 上报会议信息到乐播服务器
+/// @param contactInfo 用户的联系信息
+/// @param meetingInfo 会议信息,包含会议ID和投屏码  {@"roomid":@"XXXXXXX",@"code":@"XXXXXX"}
+/// @param callback 回调
++ (void)meetingLogFileUploadToLeboServerWithType:(LBLogReportProblemType)problemType userContactInfo:(NSString *)contactInfo meetingInfo:(NSDictionary *_Nullable)meetingInfo callback:(void(^)(BOOL succeced, NSString *_Nullable euqid, NSError *_Nullable error))callback;
+
 /**
  上报关系数据
  
@@ -170,6 +175,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)desensitizationString:(NSString *)string;
 
+/// 是否允许云日志打印
++ (BOOL)cloudLogEnable;
+/// 日志的云保存路径
++ (NSString *)cloudLogPath;
+
+/// 连接IM ————> 需要在授权认证成功之后再连接
++ (void)connectIM;
 
 @end
 

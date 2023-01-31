@@ -34,6 +34,7 @@ typedef NS_OPTIONS(NSUInteger, LBLelinkServiceSourceStyle) {
     LBLelinkServiceSourceStyleTvUidAndAppIdMatch = 1 << 8,  // tvuid和appid云端匹配发现
     LBLelinkServiceSourceStyleTvDsnAndAppIdMatch = 1 << 9,  // tvdsn和appid云端匹配发现
     LBLelinkServiceSourceStylePhoneMatch = 1 << 10,  // 脱敏数据云端匹配发现
+    LBLelinkServiceSourceStyleServerMatch = 1 << 11, // 收藏或历史记录的数据从云端返回的设备数据
 };
 
 /**
@@ -245,6 +246,7 @@ typedef NS_ENUM (NSInteger, LBLogReportProblemType){
     LBLogReportProblemTypePlayerLoadFailed = 1 << 5,               //播放片源加载失败
     LBLogReportProblemTypePlayerSoundImageNotSync = 1 << 6,        //播放片源卡顿
     LBLogReportProblemTypePlayerOther = 1 << 7,                    //其它问题
+    LBLogReportProblemTypeLelinkMeetingInfo = 1 << 8,              //会议信息
 };
 
 typedef NS_ENUM (NSInteger, LBPassthMirrorActionType){
