@@ -12,6 +12,7 @@
 @class LEBUPnPDevice;
 @class LBInnerLelinkDeviceModel;
 @class LBIMServiceModel;
+@class LBInnerFairplayDeviceModel;
 //@class LBLelinkConnection;
 
 @interface LBLelinkService : NSObject
@@ -59,6 +60,8 @@
 @property (nonatomic, copy) NSString *appID;
 /** 接收端的mirrorReconnect,内部使用*/
 @property (nonatomic, assign)NSInteger mirrorReconnect;
+/// 镜像唯一标识，内部使用
+@property (nonatomic, copy) NSString *mirrorUriId;
 /**
  服务可用状态，该服务包含三种类型的服务：乐联服务、DLNA服务和公网服务
  */
@@ -91,8 +94,12 @@
 @property (nonatomic, strong) LEBUPnPDevice *upnpDevice;
 /** 公网服务数据模型 */
 @property (nonatomic, strong) LBIMServiceModel *imDevice;
+/** fp服务数据模型 */
+@property (nonatomic, strong) LBInnerFairplayDeviceModel *fairplayDevice;
 
 @property (nonatomic, weak) id lelinkConnection;
+@property (nonatomic, weak) id lelinkPlayer;
+
 //lelink检测无效次数，0为有效
 @property (nonatomic, assign, readonly) NSInteger leinkCheckCounter;
 //dlna检测无效次数，0为有效
@@ -101,7 +108,11 @@
 @property (nonatomic, assign, getter=isMultiTunnels, readonly) BOOL multiTunnels;
 /// 是否支持企业版
 @property (nonatomic, assign, getter=isSupportWr, readonly) BOOL supportWr;
+/// 商用端的标记。 YES：是商用端；NO： 不是商用端
+@property (nonatomic, assign, getter=isCommerceSource, readonly) BOOL commerceSource;
 
+/** 原始名称 */
+@property (nonatomic, copy) NSString *originalName;
 /**
  比较两个LelinkService是否是同一个
 
@@ -135,5 +146,11 @@
  *  1 的时候就知道目前接收端渠道引流 如：00000000 000000000 00000000 00000001
  */
 - (NSString *)getserviceDrainage;
+
+/// 获取乐联局域网模型
+/// @param imService 传入公网模型
+/// @param resultBlock 回调
+- (void)getLelinkService:(LBLelinkService *)imService
+             resultBlock:(void(^_Nullable)(LBLelinkService * _Nullable resultServer ,NSError * _Nullable error))resultBlock;
 
 @end

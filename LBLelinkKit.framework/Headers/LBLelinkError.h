@@ -20,6 +20,7 @@ extern NSString * const __nonnull LBLelinkUploadFileErrorDomain;
 extern NSString * const __nonnull LBLelinkNetworkErrorDomain;
 extern NSString * const __nonnull LBLelinkSaaSInterfaceErrorDomain;
 extern NSString * const __nonnull LBLelinkFavoriteErrorDomain;
+extern NSString * const __nonnull LBLelinkIMMessageErrorDomain;
 
 /** 搜索相关错误代码 */
 typedef NS_ENUM(NSInteger, LBLelinkBrowserErrorCode) {
@@ -47,6 +48,7 @@ typedef NS_ENUM(NSInteger, LBLelinkBrowserErrorCode) {
     LBLelinkBrowserErrorMDNSSearchFiled = -1608,                    // MDNS搜索错误
     LBLelinkBrowserErrorResponseDataIsEmpty = -1609,                // 脱敏字符匹配数据为空
     LBLelinkBrowserErrorBluetoothSearchFiled = -1610,               // 蓝牙搜索失败
+    LBLelinkBrowserErrorSimplifyIsOpen = -1611,                     // simplify模式
 };
 
 /** 连接相关错误代码 */
@@ -57,6 +59,7 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorServiceAvailableAllInvalid = -2003,      // 服务所有有效性是无效的
     LBLelinkConnectionErrorInnerLelinkServiceIsNil = -2100,         // 内部的乐联服务数据为空
     LBLelinkConnectionErrorInnerLelinkReceiverLowVersion = -2101,   // 接收端的版本低，低于3.0
+    LBLelinkConnectionErrorInnerLelinkReceiverRefused = -2102,      // 被收端拒绝连接
     LBLelinkConnectionErrorIMUidOfReceiverIsNil = -2200,            // 接收端uid为空
     LBLelinkConnectionErrorIMPushRequestFail = -2201,               // 网络请求失败
     LBLelinkConnectionErrorIMWaitForTimout = -2202,                 // 防骚扰模式：等待用户允许超时
@@ -70,6 +73,9 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorIMServerError = -2210,                   // IM服务器错误
     LBLelinkConnectionErrorIMTokenExpired = -2211,                  // IM的tonken过期
     LBLelinkConnectionErrorIMResponseDataNil = -2212,               // IM响应参数为空
+    LBLelinkConnectionErrorIMUserRefusedDueToGetPictureFailed = -2213, // 防骚扰模式：接收端获取认证图片失败
+    LBLelinkConnectionErrorIMUserRefusedDueToVerificateFailed = -2214, // 防骚扰模式：验证图片失败
+    LBLelinkConnectionErrorIMReceiverNotSupport = -2215,            // 收端不支持 IM 功能
     LBLelinkConnectionErrorInitiateConnectFailed = -2301,           // 发起连接失败
     LBLelinkConnectionErrorDataEncryptFailed = -2302,               // 数据加密失败
     LBLelinkConnectionErrorXMLFormatFailed = -2303,                 // 数据xml格式化失败
@@ -87,6 +93,11 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorCurrentTemporaryNotAllowed  = -2604,     // 不允许抢占当前模式
     LBLelinkConnectionErrorCurrentTemporaryMirroring = -2605,       // 设备镜像中
     LBLelinkConnectionErrorPinCodeIsNil = -2606,                    // 投屏码为空
+    LBLelinkConnectionErrorAtRisk = -2607, /**< 当前连接的设备为风险设备 */
+    LBLelinkConnectionErrorNOConfirm = -2608, /**< 不用确认 */
+    LBLelinkConnectionErrorFaceRecognition = -2709, /**< 当前连接需要人脸识别 */
+    LBLelinkConnectionErrorRecordFailed = -2710,    /**< Record 错误 */
+    LBLelinkConnectionErrorBadRequestRejected = -2711,              // 坏的请求被拒绝
 };
 
 /** 播放相关错误代码 */
@@ -233,6 +244,7 @@ typedef NS_ENUM(NSInteger, LBLelinkSaaSInterfaceErrorCode) {
     LBLelinkSaaSInterfaceErrorDataIsNil = -12008,       // 数据为空
     LBLelinkSaaSInterfaceErrorDataInconsistency = -12009,// 图形验证码与TV端数据不一致
     LBLelinkSaaSInterfaceErrorInvalidScreenCastingCode = -12010,//无效投屏码
+    LBLelinkSaasInterfaceErrorLoginInvalidation = -12011, /**< 用户登录已失效 */
 };
 
 /** 设备收藏和保存历史投屏记录 相关接口错误码*/
@@ -269,5 +281,23 @@ typedef NS_ENUM(NSInteger, LBLelinkFavoriteHistoryErrorCode) {
     LBLelinkFavoriteHistoryErrorCodeRefused = -12129, /**< 接收端拒绝被收藏 */
     LBLelinkFavoriteHistoryErrorCodeServiceVersionLow = -12130, /**< 接收端版本过低 */
     LBLelinkFavoriteHistoryErrorCodeServiceTypeNotLelink = -12131, /**< 非乐播接收端 */
+    LBLelinkFavoriteHistoryErrorCodeThisFunctionIsNotLeboAPP = -12132, /**< 非乐播APP */
+    LBLelinkFavoriteHistoryErrorCodeSimplifyIsOpen = -12133,          /**< simplify 模式打开*/
+};
+
+/** IM TCP 收发消息 相关的错误码*/
+typedef NS_ENUM(NSInteger, LBLelinkIMMessageErrorCode) {
+    /// 未知错误
+    LBLelinkIMMessageErrorCodeUnknown = -100,
+    /// 异常参数
+    LBLelinkIMMessageErrorCodeExceptionParam = -101,
+    /// 客户端请求格式错误
+    LBLelinkIMMessageErrorCodeRequestFormat = 400,
+    /// 客户端不在线
+    LBLelinkIMMessageErrorCodeNotOnline = 404,
+    /// 频率限制
+    LBLelinkIMMessageErrorCodeFrequencyLimit = 410,
+    /// 服务器内部错误
+    LBLelinkIMMessageErrorCodeServerInternal = 65535,
 };
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "LBDefine.h"
 #import "LBLelinkBrowser.h"
 #import "LBLelinkService.h"
 #import "LBLelinkConnection.h"
@@ -15,10 +16,14 @@
 #import "LBLelinkPlayerItem.h"
 #import "LBLelinkError.h"
 #import "LBLelinkBase.h"
-#import "LBADInterface.h"
 #import "LBADInfo.h"
 #import "LBLelinkTextBarrage.h"
+
+#if SIMPLIFY
+#else
+#import "LBADInterface.h"
 #import "LBLelinkServiceCategroy.h"
+#endif
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LBLelinkKit : NSObject
@@ -99,6 +104,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param ehid 用户的uid，    企业付费的设备id或license授权时租户提供设备id
 + (void)setUserID:(NSString *_Nullable)userID token:(NSString *_Nullable)token nickName:(NSString *_Nullable)nickName uid:(NSString *_Nullable)uid ehid:(NSString *_Nullable)ehid;
 
+/// 设置用户唯一标识，用于云端存取用户的远程设备信息或企业授权
+/// 非必要的设置，不设置，则不进行云端存取，仅本地存取
+/// 在用户登录成功的时候可进行设置
+/// @param userID 用户的唯一标识，对应的是 uuid
+/// @param token 用户的令牌，    对应的是 token
+/// @param nickName 用户的昵称, 对应的是 nickname
+/// @param uid 用户的uid，      对应的是 uid
+/// @param ehid 用户的uid，    企业付费的设备id或license授权时租户提供设备id
+/// @param otherParam 通用参数
++ (void)setUserID:(NSString *_Nullable)userID token:(NSString *_Nullable)token nickName:(NSString *_Nullable)nickName uid:(NSString *_Nullable)uid ehid:(NSString *_Nullable)ehid otherParam:(NSDictionary *)otherParam;
+
 + (void)clearUserID;
 
 
@@ -122,12 +138,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  是否打开log文件保存，保存在沙盒Caches文件夹,（最大10M日志）
- 日志指定保存路径默认在/dailyLogFile 路径下
+ 日志保存路径在沙盒Caches/LBLelinkKit文件夹路径下
  
 @param enable YES代表打开，NO代表关闭，默认为NO
 */
 + (void)enableLogFileSave:(BOOL)enable;
 
+/// 是否打开log方法回调
+/// 与enableLogFileSave:YES接口互斥,文件保存和日志回调只能二选一
+/// @param target 回调对象
+/// @param outputSEL 回调方法,例@selector(logOutput:level:)，+ (void)logOutput:(NSString *)string level:(NSNumber *)levelNumber;附带二个参数string(日志信息)和levelNumber(日志等级)
+///  LEBLogLevelTypeUndefine = 0,LEBLogLevelTypeDebug = 1, LEBLogLevelTypeInfo = 2,LEBLogLevelTypeWarnning,LEBLogLevelTypeError,LEBLogLevelTypeAbnormal,LEBLogLevelTypeFatal,依次递增
++ (void)enableLogToTarget:(id)target outputSEL:(SEL)outputSEL;
 /**
  是否打开云镜像log文件保存，保存在沙盒
  1）若设置enableLogFileSave:方法设置YES，也同等打开

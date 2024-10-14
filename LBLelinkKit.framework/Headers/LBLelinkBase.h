@@ -16,6 +16,7 @@ typedef NS_OPTIONS(NSUInteger, LBLelinkServiceType) {
     LBLelinkServiceTypeLelink = 1 << 0,         // 乐联：局域网内的乐联投屏协议
     LBLelinkServiceTypeDlnaDMC = 1 << 1,        // DLNA的DMC：局域网内的DLNA的DMC投屏协议
     LBLelinkServiceTypePublickNetwork = 1 << 2, // 公网：通过服务器与接收端建立连接
+    LBLelinkServiceTypeFairplay = 1 << 3,       // fp：局域网内的fp投屏协议
 };
 
 /**
@@ -64,8 +65,13 @@ typedef NS_ENUM(NSUInteger, LBLelinkPlayStatus) {
  播放状态原因，因dlna和历史版本无法获取，暂不对提供
  */
 typedef NS_ENUM(NSUInteger, LBLelinkPlayStatusReason) {
-    LBLelinkPlayStatusReasonUnkown = 0,         // 原因未知
-    LBLelinkPlayStatusReasonPreemptStopped,     // 抢占结束
+    LBLelinkPlayStatusReasonUnkown = 0,             // 原因未知
+    LBLelinkPlayStatusReasonInterrupted,            // 被中断
+    LBLelinkPlayStatusReasonEpisodeCommpleted,      // 单集播放完成
+    LBLelinkPlayStatusReasonRefused = 4,            // 被拒绝
+    LBLelinkPlayStatusReasonPlayCompleted = 10,     // 播放完成结束
+    LBLelinkPlayStatusReasonPreemptStopped = 20,    // 被抢占结束
+    LBLelinkPlayStatusReasonNeedFaceVerify = 100,   // 需人脸认证
 };
 /**
  媒体类型
@@ -143,6 +149,13 @@ typedef NS_ENUM(NSUInteger, LBLelinkBarrageSettingSpeed) {
     LBLelinkBarrageSettingSpeed_TEN           // 1.5
 };
 
+@interface LBHarassPictureInfo : NSObject
+
+@property (nonatomic, copy) NSString *_Nullable picUrl; // 图片地址
+@property (nonatomic, copy) NSString *_Nullable picId; // 图片ID
+
+@end
+
 /**
  防骚扰状态
  */
@@ -163,11 +176,21 @@ typedef NS_ENUM(NSInteger, LBLelinkHarassStateDetail) {
 };
 
 /**
+ 防骚扰验证方式
+ */
+typedef NS_ENUM(NSInteger, LBLelinkHarassType) {
+    LBLelinkHarassTypeRemoteControl = 0, /**< 遥控器确认 */
+    LBLelinkHarassTypePicture = 1, /**< 图形验证方式 */
+};
+
+/**
  防骚扰状态和详情
  */
 typedef struct {
     LBLelinkHarassState state;
     LBLelinkHarassStateDetail detail;
+    LBLelinkHarassType type; // 值为 LBLelinkHarassTypePicture 时， pictures 才有值
+    NSArray<LBHarassPictureInfo *> * _Nullable pictures;
 }LBLelinkHarassInfo;
 
 typedef enum {//对端处理该数据的模块
@@ -378,3 +401,12 @@ typedef NS_OPTIONS(NSUInteger, LBLelinkProtocolType) {
     LBLelinkProtocolTypeMiracast = 1 << 6,          // miracast协议
 };
 
+/**
+ 播放控制镜像状态
+ 因1~7是收端占用，所以从8开始
+ */
+typedef NS_OPTIONS(NSUInteger, LBLelinkCloudMirrorExitMode) {
+    LBLelinkCloudMirrorExitModeUnkown = 0,
+    LBLelinkCloudMirrorExitModeActive = 8,  /// 用户主动结束
+    LBLelinkCloudMirrorExitModeTrialDuration = 9, /// 试用时长到结束
+};

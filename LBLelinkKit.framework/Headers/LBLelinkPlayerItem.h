@@ -127,5 +127,9 @@
 */
 @property (nonatomic, assign) NSInteger tailDuration;
 
+/**
+ 禁止内部重试推送, 默认：NO
+ */
+@property (nonatomic, assign) BOOL disableInternalRetry;
 
 @end

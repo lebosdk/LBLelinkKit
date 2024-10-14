@@ -281,6 +281,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)modifyBarrageSetting:(LBBarrageSetting *)barrageSetting;
 
+/**
+ 云镜像退出方式
+ 
+ @param mode 退出方式
+ */
+- (void)cloudMirrorExitMode:(LBLelinkCloudMirrorExitMode)mode;
 
 /**
  是否支持播放器所需header信息,支持情况下在LBLelinkPlayerItem.headerInfo设置属性生效
