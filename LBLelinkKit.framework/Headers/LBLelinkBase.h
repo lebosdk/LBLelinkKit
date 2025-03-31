@@ -255,6 +255,7 @@ typedef NS_ENUM(NSUInteger, LBPlaySpeedRateType) {
     LBPlaySpeedRate1_25X,       // 1.25
     LBPlaySpeedRate1_5X,        // 1.5
     LBPlaySpeedRate2_0X,        // 2.0
+    LBPlaySpeedRate3_0X,        // 3.0
 };
 
 /**

@@ -52,13 +52,13 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
 @param connection 当前
 @param dict 透传的信息
  */
-- (void)lelinkConnection:(LBLelinkConnection *)connection waterRabbitMessageWithDict:(NSDictionary*)dict;
+- (void)lelinkConnection:(LBLelinkConnection *)connection waterRabbitMessageWithDict:(NSDictionary *_Nullable)dict;
 /**服务器传递给app指令信息
 @param connection 当前
 @param action 消息方法
 @param body 消息体,可能是NSDictionary或 NSString
 */
-- (void)lelinkConnection:(LBLelinkConnection *)connection serverPassAppDataWithAction:(NSString *)action body:(id)body;
+- (void)lelinkConnection:(LBLelinkConnection *)connection serverPassAppDataWithAction:(NSString *_Nullable)action body:(id _Nullable)body;
 
 /**
  返回发送端是否具有云镜像/云桌面功能
@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
  @param connection 当前连接
  @param error 错误信息
  */
-- (void)lelinkConnection:(LBLelinkConnection *)connection onBusinessError:(NSError *)error;
+- (void)lelinkConnection:(LBLelinkConnection *)connection onBusinessError:(NSError *_Nullable)error;
 @end
 
 @protocol LBLelinkCMirrorDelegate <NSObject>
@@ -85,6 +85,19 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
 
 @protocol LBLelinkConnectionDelegate <NSObject>
 
+@required
+
+/// 开始重连 
+/// 接收端支持重连，并且重连开关为开的状态下，会自动触发内部重连
+/// 当前连接重连中，不会触发 lelinkConnection:onError: 和 lelinkConnection:disConnectToService: 回调，会触发此回调，
+/// 在发起业务的时候，应当判断是否在重连中，如果在重连中发起的业务不会响应，此方法每次发起重连都会触发，所以会存在回调多次场景，
+///
+/// 例如：局域网连接设备后，当网络发生波动导致连接异常，会触发内部自动重连，若网络正常并且还是在同一局域网下重连成功会触发 lelinkConnectionRetryConnectSuccessfully: 回调，
+/// 重连失败的话，会触发 lelinkConnection:retryConnectFailed: 回调，不管成功还是失败，重连结束都会触发 lelinkConnectionRetryConnectFinished: 回调，
+/// 如果需要取消重连，直接调用 disConnect 断开连接即可。
+/// @param connection 当前连接
+- (void)lelinkConnectionDidStartRetryConnect:(LBLelinkConnection *)connection;
+
 
 @optional
 
@@ -94,7 +107,7 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
  @param connection 当前连接
  @param error 错误信息
  */
-- (void)lelinkConnection:(LBLelinkConnection *)connection onError:(NSError *)error;
+- (void)lelinkConnection:(LBLelinkConnection *)connection onError:(NSError *_Nullable)error;
 
 /**
  连接成功代理回调
@@ -112,10 +125,6 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
  */
 - (void)lelinkConnection:(LBLelinkConnection *)connection disConnectToService:(LBLelinkService *)service;
 
-/// 开始重连
-/// @param connection 当前连接
-- (void)lelinkConnectionDidStartRetryConnect:(LBLelinkConnection *)connection;
-
 /// 重连成功
 /// @param connection 当前连接
 - (void)lelinkConnectionRetryConnectSuccessfully:(LBLelinkConnection *)connection;
@@ -128,7 +137,6 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
 /// 重连结束
 /// @param connection 当前连接
 - (void)lelinkConnectionRetryConnectFinished:(LBLelinkConnection *)connection;
-
 
 /// IM 重连
 /// @param connection connection
@@ -154,7 +162,7 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
  @param connection 当前
  @param adInfo 广告信息
  */
-- (void)lelinkConnection:(LBLelinkConnection *)connection didReceiveAdInfo:(LBADInfo *)adInfo;
+- (void)lelinkConnection:(LBLelinkConnection *)connection didReceiveAdInfo:(LBADInfo *_Nullable)adInfo;
 
 /**
  收到支持的解码器信息
@@ -162,7 +170,7 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
  @param connection 当前
  @param decoderArray 解码器列表
  */
-- (void)lelinkConnection:(LBLelinkConnection *)connection decoderList:(NSArray <LBDecodabilityModel *>*)decoderArray;
+- (void)lelinkConnection:(LBLelinkConnection *)connection decoderList:(NSArray <LBDecodabilityModel *> *_Nullable)decoderArray;
 
 /**
 权益查询同步信息
@@ -185,7 +193,7 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
 @param action 消息方法
 @param body 消息体,可能是NSDictionary或 NSString
 */
-- (void)lelinkConnection:(LBLelinkConnection *)connection serverPassAppDataWithAction:(NSString *)action body:(id)body;
+- (void)lelinkConnection:(LBLelinkConnection *)connection serverPassAppDataWithAction:(NSString *_Nullable)action body:(id _Nullable)body;
 
 
 /**收到镜像暂停/继续透传指令
@@ -199,20 +207,20 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
 @param connection 当前
 @param bodyDic 反控信息
  */
-- (void)lelinkConnection:(LBLelinkConnection *)connection passthEventReverseControlBodyDic:(NSDictionary *)bodyDic;
+- (void)lelinkConnection:(LBLelinkConnection *)connection passthEventReverseControlBodyDic:(NSDictionary *_Nullable)bodyDic;
 
 /**收到遥控器事件信息
 @param connection 当前
 @param bodyDic 事件信息，键值信息参考 https://doc.hpplay.com.cn/web/#/20?page_id=303
  
  */
-- (void)lelinkConnection:(LBLelinkConnection *)connection passthRemoteControlEventDic:(NSDictionary *)bodyDic;
+- (void)lelinkConnection:(LBLelinkConnection *)connection passthRemoteControlEventDic:(NSDictionary *_Nullable)bodyDic;
 
 /** 收到微应用透传信息
 @param connection 当前
 @param dict 透传的信息
  */
-- (void)lelinkConnection:(LBLelinkConnection *)connection microAppMessageWithDict:(NSDictionary*)dict;
+- (void)lelinkConnection:(LBLelinkConnection *)connection microAppMessageWithDict:(NSDictionary*_Nullable)dict;
 
 /** 收到微应用关闭信息
 @param connection 当前
@@ -254,12 +262,12 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
  @param connection 当前连接
  @param bodyDic 附带参数，eid:双端日志关联id，et:问题类型
  */
-- (void)lelinkConnection:(LBLelinkConnection *)connection passthUploadLogFileBodyDic:(NSDictionary *)bodyDic;
+- (void)lelinkConnection:(LBLelinkConnection *)connection passthUploadLogFileBodyDic:(NSDictionary *_Nullable)bodyDic;
 
 /// 云应用cookie信息
 /// @param connection 当前连接
 /// @param bodyDict cookie信息内容
-- (void)lelinkConnection:(LBLelinkConnection *)connection passthCloudAppCookieBodyDic:(NSDictionary *)bodyDict;
+- (void)lelinkConnection:(LBLelinkConnection *)connection passthCloudAppCookieBodyDic:(NSDictionary *_Nullable)bodyDict;
 
 /// 透传通用方法
 /// @param connection 当前连接
@@ -267,7 +275,7 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
 /// 例如manifestType == 57: 透传发送端推送播放器错误信息,bodyDic为错误信息,错误的类型说明https://doc.hpplay.com.cn/web/#/p/24056a1888f3338e504fb1010656c800
 /// @param bodyDic 消息体
 /// @param headDic 消息头
-- (void)lelinkConnection:(LBLelinkConnection *)connection passthPublicManifestType:(NSInteger)manifestType bodyDic:(NSDictionary *)bodyDic headDic:(NSDictionary *)headDic;
+- (void)lelinkConnection:(LBLelinkConnection *)connection passthPublicManifestType:(NSInteger)manifestType bodyDic:(NSDictionary *_Nullable)bodyDic headDic:(NSDictionary *_Nullable)headDic;
 @end
 
 
@@ -326,6 +334,14 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
  */
 - (void)disConnect;
 
+/// 设置重连开关
+/// - Parameter reconnectEnable: 重连开关 true-开 false-关 默认开
+- (void)setReconnectEnable:(BOOL)reconnectEnable;
+
+/// 设置重连超时时长
+/// - Parameter reconnectTimeout: 重连超时时长 0-无限重连 （推送默认 0，镜像默认 110s）
+- (void)setReconnectTimeout:(NSTimeInterval)reconnectTimeout;
+
 - (void)sendCloudMirroRoomId:(NSString *)roomId type:(NSString *)type;
 
 /**
@@ -374,6 +390,8 @@ typedef NS_ENUM(NSInteger, LBServerNorMsgType) {
 - (BOOL)canWaterRabbit;
 /// 是否支持投屏空间
 - (BOOL)canCastSpace;
+/// 当前收端是否支持公网推送（只有当前连接是公网时才有效）
+- (BOOL)canPublicPush;
 
 - (BOOL)canPassthPluginInfo;
 

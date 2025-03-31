@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param browser 当前搜索工具
  @param error 错误信息
  */
-- (void)lelinkBrowser:(LBLelinkBrowser *)browser onError:(NSError *)error;
+- (void)lelinkBrowser:(LBLelinkBrowser *)browser onError:(NSError *_Nullable)error;
 
 /**
  发现设备代理回调：一旦设备列表有变化就会回调
@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param browser 当前搜索工具
  @param services 设备列表
  */
-- (void)lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkServices:(NSArray <LBLelinkService *> *)services;
+- (void)lelinkBrowser:(LBLelinkBrowser *)browser didFindLelinkServices:(NSArray <LBLelinkService *> *_Nullable)services;
 
 /**
  扫码发现设备回调

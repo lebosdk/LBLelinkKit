@@ -76,6 +76,7 @@ typedef NS_ENUM(NSInteger, LBLelinkConnectionErrorCode) {
     LBLelinkConnectionErrorIMUserRefusedDueToGetPictureFailed = -2213, // 防骚扰模式：接收端获取认证图片失败
     LBLelinkConnectionErrorIMUserRefusedDueToVerificateFailed = -2214, // 防骚扰模式：验证图片失败
     LBLelinkConnectionErrorIMReceiverNotSupport = -2215,            // 收端不支持 IM 功能
+    LBLelinkConnectionErrorIMNotAllowedPublicConnection = -2216,    // 后台配置不允许公网连接
     LBLelinkConnectionErrorInitiateConnectFailed = -2301,           // 发起连接失败
     LBLelinkConnectionErrorDataEncryptFailed = -2302,               // 数据加密失败
     LBLelinkConnectionErrorXMLFormatFailed = -2303,                 // 数据xml格式化失败
@@ -245,6 +246,7 @@ typedef NS_ENUM(NSInteger, LBLelinkSaaSInterfaceErrorCode) {
     LBLelinkSaaSInterfaceErrorDataInconsistency = -12009,// 图形验证码与TV端数据不一致
     LBLelinkSaaSInterfaceErrorInvalidScreenCastingCode = -12010,//无效投屏码
     LBLelinkSaasInterfaceErrorLoginInvalidation = -12011, /**< 用户登录已失效 */
+    LBLelinkSaasInterfaceErrorCancel = -12011,          /**< 用户取消接口请求 */
 };
 
 /** 设备收藏和保存历史投屏记录 相关接口错误码*/

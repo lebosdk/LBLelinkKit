@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param player 当前播放器
  @param error 错误信息
  */
-- (void)lelinkPlayer:(LBLelinkPlayer *)player onError:(NSError *)error;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player onError:(NSError *_Nullable)error;
 
 /**
  播放状态代理回调
@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param player 当前播放器
  @param progressInfo 进度信息
  */
-- (void)lelinkPlayer:(LBLelinkPlayer *)player progressInfo:(LBLelinkProgressInfo *)progressInfo;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player progressInfo:(LBLelinkProgressInfo *_Nullable)progressInfo;
 
 /**
  播放广告进度信息代理回调，从发端推送广告时会有回调
@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param player 当前播放器
  @param aDProgressInfo 广告进度信息
  */
-- (void)lelinkPlayer:(LBLelinkPlayer *)player aDProgressInfo:(LBLelinkProgressInfo *)aDProgressInfo;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player aDProgressInfo:(LBLelinkProgressInfo *_Nullable)aDProgressInfo;
 
 /**
  设置检测行为错误代理回调，注意此方法不是在调用“- (void)setMonitorActions:(NSArray <LBMonitorAction *> *)monitorActions;”后立即回调，
@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param player 当前播放器
  @param error 错误信息
  */
-- (void)lelinkPlayer:(LBLelinkPlayer *)player setMonitorActionError:(NSError *)error;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player setMonitorActionError:(NSError *_Nullable)error;
 
 /**
  防骚扰信息代理回调
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param player 当前播放器
  @param dataObj 从接收端透传过来数据对象
  */
-- (void)lelinkPlayer:(LBLelinkPlayer *)player passthLeboInternalData:(id)dataObj;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player passthLeboInternalData:(id _Nullable)dataObj;
 
 
 /**
@@ -95,12 +95,12 @@ NS_ASSUME_NONNULL_BEGIN
  @param player 当前播放器
  @param dataObj 从接收端透传过来的数据对象
  */
-- (void)lelinkPlayer:(LBLelinkPlayer *)player passthExternalData:(id)dataObj;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player passthExternalData:(id _Nullable)dataObj;
 
 /// 秘听功能的回调
 /// @param player 当前播放器
 /// @param data 音频数据
-- (void)lelinkPlayer:(LBLelinkPlayer *)player secretListenAudioData:(NSData *)data;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player secretListenAudioData:(NSData * _Nullable)data;
 /**
  播放倍速获取和同步回调
 
@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param player 当前播放器
  @param error 倍速播放状态
  */
-- (void)lelinkPlayer:(LBLelinkPlayer *)player playSpeedError:(NSError *)error;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player playSpeedError:(NSError *_Nullable)error;
 
 /**
  播放片源代理回调，在推送视频列表时有效
@@ -123,14 +123,14 @@ NS_ASSUME_NONNULL_BEGIN
  @param player 当前播放器
  @param mediaId 当前播放的片源Id,视频列表时设置的LBLelinkPlayerItem.mediaId
  */
-- (void)lelinkPlayer:(LBLelinkPlayer *)player currentMediaId:(NSString *)mediaId;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player currentMediaId:(NSString *_Nullable)mediaId;
 
 
 /** 媒体资源推送后收端的响应，媒体推送到收端成功
  @param player 当前播放器
  @param mediaObject 媒体对象，item或itemArray
  */
-- (void)lelinkPlayer:(LBLelinkPlayer *)player pushResponse:(id)mediaObject;
+- (void)lelinkPlayer:(LBLelinkPlayer *)player pushResponse:(id _Nullable)mediaObject;
 
 @end
 
@@ -144,6 +144,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) LBLelinkConnection *lelinkConnection;
 /** 播放媒体对象 */
 @property (nonatomic, strong) LBLelinkPlayerItem *item;
+/// 播放状态传入的 uri
+@property (nonatomic, copy, readonly) NSString *playStatusURI;
 
 /**
  初始化播放器，使用此方法初始化播放器后需要设置连接和代理
