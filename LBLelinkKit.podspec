@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 # Root specification
   s.name         = "LBLelinkKit"
-  s.version      = "32689"
+  s.version      = "32717"
   s.author            = {'lebosdk' => 'cm@hpplay.cn' }
   s.license      = 'MIT'
  # s.homepage     = 'https://github.com/lebosdk/LBLelinkKit'
@@ -25,6 +25,6 @@ Pod::Spec.new do |s|
 
 # File patterns
   #s.public_header_files = 'LBLelinkKit.framework/*.h'
-  s.ios.vendored_frameworks = 'LBLelinkKit.framework'
+  s.ios.vendored_frameworks = 'LBLelinkKit.xcframework'
 
 end

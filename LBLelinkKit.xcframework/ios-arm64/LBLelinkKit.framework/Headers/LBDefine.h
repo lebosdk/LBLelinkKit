@@ -8,8 +8,10 @@
 #ifndef LBDefine_h
 #define LBDefine_h
 
-// 支持Airplay投屏
+// 支持Airplay投屏,对外sdk不打开,内部APP使用，按需打开，APP打包不修改该值，默认1
 #define LCLINKFP 0
+// quic 开关 对外 SDK 不打开，内部 App 使用，按需打开，默认1（ 1-编译quic代码 0-不编译）
+#define QUIC 1
 // 不采集IDFA，0:采集，1:不采集，默认0
 #define NOTUSEADID 0
 // 儿童类应用配置，不采集设备信息，0:非儿童应用，1:儿童应用，采集设备信息，默认0
@@ -32,5 +34,7 @@
 #define OPENHTTPSSSL 0
 // 反诈骗开关，内部APP使用，按需打开，默认0
 #define OPENANTIFRAUD 0
+// 打开APP外镜像限制， 对外sdk需打开，内部APP需关闭，APP打包不修改该值，默认0
+#define OPENAPPEXTERNALLIMIT 1
 
 #endif /* LBDefine_h */

@@ -210,11 +210,11 @@ typedef enum {//媒体资源信息
  媒体播放循环模式
  */
 typedef NS_ENUM(NSInteger, LBLelinkMediaPlayLoopMode) {
-    LBLelinkMediaPlayLoopModeDefault = 0,    // 默认模式,播完结束
+    LBLelinkMediaPlayLoopModeDefault = 0,    // 默认模式(顺序播放)
     LBLelinkMediaPlayLoopModeSingleCycle,    // 单曲循环
-    LBLelinkMediaPlayLoopModeAllCycle,       // 全部循环
-    LBLelinkMediaPlayLoopModeOrderPlay,      // 顺序循环
-    LBLelinkMediaPlayLoopModeRandomPlay,     // 随机循环
+    LBLelinkMediaPlayLoopModeAllCycle,       // 循环播放
+    LBLelinkMediaPlayLoopModeOrderPlay,      // 顺序播放，不循环
+    LBLelinkMediaPlayLoopModeRandomPlay,     // 随机播放
 };
 
 /**
@@ -411,3 +411,4 @@ typedef NS_OPTIONS(NSUInteger, LBLelinkCloudMirrorExitMode) {
     LBLelinkCloudMirrorExitModeActive = 8,  /// 用户主动结束
     LBLelinkCloudMirrorExitModeTrialDuration = 9, /// 试用时长到结束
 };
+

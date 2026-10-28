@@ -110,10 +110,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)lelinkPlayer:(LBLelinkPlayer *)player playSpeed:(double)playSpeed;
 
 /**
- 倍速播放代理回调
+ 设置倍速播放代理回调
 
  @param player 当前播放器
- @param error 倍速播放状态
+ @param error 倍速播放状态，error 为 nil 时代表着设置倍速成功
  */
 - (void)lelinkPlayer:(LBLelinkPlayer *)player playSpeedError:(NSError *_Nullable)error;
 
@@ -356,6 +356,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cacheVideoList:(NSArray <LBLelinkPlayerItem *>*)itemArray startIndex:(NSInteger)index;
 
 #pragma mark - 以下区间是推送视频列表相关接口
+
+/// 当前连接的收端是否支持 H265 解码（返回 NO 时，存在两种情况，收端新版本不支持，收端老版本 H265 解码能力未知）
+- (BOOL)isSupportH265Decode;
 
 /// 是否能推送视频列表
 - (BOOL)canPushVideoList;

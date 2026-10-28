@@ -134,7 +134,7 @@ typedef NS_ENUM(NSInteger, LBLelinkPlayerErrorCode) {
     LBLelinkPlayerErrorNotSupportSwitchAudioTrack = -3860,          // 不支持切换音轨
     LBLelinkPlayerErrorNotSupportSwitchTemporaryPrivateMode = -3861,// 不支持临时独占模式
     LBLelinkPlayerErrorNotSupportContorPlayerCommand = -3862, // 不支持发送播放器切换指令
-    LBLelinkPlayerErrorNotSupportSetPlayerPortCommand = -3862, // 不支持播放器设置端口
+    LBLelinkPlayerErrorNotSupportSetPlayerPortCommand = -3863, // 不支持播放器设置端口
 };
 
 /** 互动广告相关错误 */
@@ -210,8 +210,8 @@ typedef NS_ENUM(NSInteger,LBLelinkLogErrorCode) {
     LBLelinkLogErrorCodeUploadLogServerResponseFailure = -8002,    //日志上传服务器回复失败
     LBLelinkLogErrorCodeUploadLogExistsIllegalCharacter = -8003,    //日志上传存在非法字符
     LBLelinkLogErrorCodeUploadLogRequestFailed = -8004,    //日志上传请求失败
-    LBLelinkLogErrorCodeUploadLogFailedOther = - 8005,           //日志上传失败其它原因
-    LBLelinkLogErrorCodeUploadLogNotAllowChannle = - 8006,      // 上报日志渠道禁止
+    LBLelinkLogErrorCodeUploadLogFailedOther = -8005,           //日志上传失败其它原因
+    LBLelinkLogErrorCodeUploadLogNotAllowChannle = -8006,      // 上报日志渠道禁止
 };
 
 typedef NS_ENUM(NSInteger,LBLelinkReverseControlErrorCode) {
@@ -245,8 +245,15 @@ typedef NS_ENUM(NSInteger, LBLelinkSaaSInterfaceErrorCode) {
     LBLelinkSaaSInterfaceErrorDataIsNil = -12008,       // 数据为空
     LBLelinkSaaSInterfaceErrorDataInconsistency = -12009,// 图形验证码与TV端数据不一致
     LBLelinkSaaSInterfaceErrorInvalidScreenCastingCode = -12010,//无效投屏码
-    LBLelinkSaasInterfaceErrorLoginInvalidation = -12011, /**< 用户登录已失效 */
     LBLelinkSaasInterfaceErrorCancel = -12011,          /**< 用户取消接口请求 */
+    LBLelinkSaasInterfaceErrorLoginInvalidation = -12012, /**< 用户登录已失效 --- 不确定是收端失效还是发端失效 */
+    LBLelinkSaasInterfaceErrorSenderTokenInvalidation = -12013,     /**< 发送端用户登录Token失效 */
+    LBLelinkSaasInterfaceErrorReceiverTokenInvalidation = -12014,       /**< 接收端用户登录Token失效 */
+    LBLelinkSaasInterfaceErrorMeetingIdMistakeOrMeetingFinished = -12015,       /**< 输入投屏码错误或投屏已结束 */
+    LBLelinkSaaSInterfaceErrorRequestTimeout = -12016,                  /**< 接口请求超时 */
+    LBLelinkSaaSInterfaceErrorFailedHostName = -12017,                  /**< 未能找到使用指定主机名的服务器 */
+    LBLelinkSaaSInterfaceErrorINetworkConnectionLost = -12018,          /**< 网络已中断 */
+    LBLelinkSaaSInterfaceErrorNumberLimit = -12019,         /**< 投屏空间人数已经达到上限 */
 };
 
 /** 设备收藏和保存历史投屏记录 相关接口错误码*/
